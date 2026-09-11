@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevMetrics — Meça sua evolução como desenvolvedor</title>
+  <meta name="description" content="Acompanhe commits, PRs, testes, estudos e novas tecnologias em um Dev Score transparente. Sem IA, sem gamificação vazia." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%237c5cff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>D</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/landing.css" />
+</head>
+<body>
+  <div class="scene-bg"></div>
+
+  <div class="navbar">
+    <div class="container navbar" style="padding:0;border:none">
+      <a href="index.html" class="brand">
+        <span class="brand-mark floating-icon">D</span>
+        DevMetrics
+      </a>
+      <nav>
+        <a href="#features">Recursos</a>
+        <a href="#scoring">Pontuação</a>
+        <a href="#anti-procrastinacao">Anti-procrastinação</a>
+      </nav>
+      <div style="display:flex;gap:10px">
+        <a href="login.html" class="btn btn-ghost">Entrar</a>
+        <a href="register.html" class="btn btn-primary">Criar conta</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-badge">
+        <span class="live-dot"></span>
+        Dev Score explicável — não é IA, são regras que você pode ler
+      </div>
+      <h1>O GitHub mostra seus commits. <span class="gradient-text">O DevMetrics mostra sua evolução.</span></h1>
+      <p class="lead">
+        Testes, documentação, bugs corrigidos, projetos novos, tecnologias aprendidas.
+        Um Dev Score que pune commit vazio e premia constância e variedade —
+        e um desafio pequeno todo dia para você nunca perder o ritmo.
+      </p>
+      <div class="hero-actions">
+        <a href="register.html" class="btn btn-primary">Começar gratuitamente</a>
+        <a href="#scoring" class="btn btn-ghost">Ver como pontua ↓</a>
+      </div>
+
+      <div class="hero-mockup-scene">
+        <div class="hero-mockup tilt-scene">
+          <div class="tilt-card" data-tilt-max="3" style="border-radius:inherit">
+            <div class="hero-mockup-bar"><span></span><span></span><span></span></div>
+            <div class="hero-mockup-grid">
+              <div class="hero-mockup-card">
+                <div class="score-ring-wrap" style="width:120px;height:120px;margin:0 auto">
+                  <svg viewBox="0 0 140 140">
+                    <defs>
+                      <linearGradient id="scoreGradientMock" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#7c5cff" />
+                        <stop offset="100%" stop-color="#33d6ff" />
+                      </linearGradient>
+                    </defs>
+                    <circle class="score-ring-bg" cx="70" cy="70" r="58"></circle>
+                    <circle cx="70" cy="70" r="58" fill="none" stroke="url(#scoreGradientMock)"
+                      stroke-width="12" stroke-linecap="round"
+                      stroke-dasharray="248 364" style="transition:none"></circle>
+                  </svg>
+                  <div class="score-ring-center">
+                    <div class="score-ring-value" style="font-size:26px">682</div>
+                    <div class="score-ring-label">Dev Score</div>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-mockup-card">
+                <div style="display:flex;gap:3px;flex-wrap:wrap">
+                  <script>document.write(Array.from({length: 91}).map(() => {
+                    const l = Math.floor(Math.random() * 5);
+                    return `<div style="width:11px;height:11px;border-radius:2px;background:var(--level-${l})"></div>`;
+                  }).join(""));</script>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Como funciona</span>
+          <h2>Atividade real, não só commits</h2>
+          <p>O sistema acompanha os sinais que de fato indicam crescimento técnico.</p>
+        </div>
+        <div class="feature-grid reveal-stagger">
+          <div class="feature-card tilt-card">
+            <div class="feature-icon">📊</div>
+            <h3>Calendário inteligente</h3>
+            <p>Igual ao do GitHub, mas com níveis calculados sobre a sua própria distribuição — não um corte fixo igual pra todo mundo.</p>
+          </div>
+          <div class="feature-card tilt-card">
+            <div class="feature-icon">🔗</div>
+            <h3>Conecta com GitHub</h3>
+            <p>Importa commits, PRs, issues e linguagens automaticamente e classifica cada commit por tipo — sem IA, com regras auditáveis.</p>
+          </div>
+          <div class="feature-card tilt-card">
+            <div class="feature-icon">🧠</div>
+            <h3>Dev Score explicável</h3>
+            <p>Volume, consistência, variedade, aprendizado e diversidade tecnológica. Cada componente com peso e explicação visíveis.</p>
+          </div>
+          <div class="feature-card tilt-card">
+            <div class="feature-icon">🔥</div>
+            <h3>Anti-procrastinação</h3>
+            <p>"Desafio de Hoje" sugere uma tarefa pequena e concreta quando você fica parado, sem cobrança, só um empurrão.</p>
+          </div>
+          <div class="feature-card tilt-card">
+            <div class="feature-icon">🧭</div>
+            <h3>Próximo Passo</h3>
+            <p>Identifica padrões na sua stack e sugere a próxima tecnologia que faz sentido aprender — com justificativa.</p>
+          </div>
+          <div class="feature-card tilt-card">
+            <div class="feature-icon">🏆</div>
+            <h3>Conquistas reais</h3>
+            <p>Primeiro PR, primeiro teste, 7 dias seguidos, primeiro Docker — marcos que documentam sua jornada.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="scoring">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Sistema de pontuação</span>
+          <h2>Pensado para não recompensar ruído</h2>
+          <p>10 commits vazios no mesmo dia valem 14,65 pontos — não 50. Um commit, um teste e uma documentação valem 19.</p>
+        </div>
+        <div class="score-formula reveal">
+          <span class="term">400 × Volume</span>
+          <span class="op">+</span>
+          <span class="term">200 × Consistência</span>
+          <span class="op">+</span>
+          <span class="term">150 × Variedade</span>
+          <span class="op">+</span>
+          <span class="term">150 × Aprendizado</span>
+          <span class="op">+</span>
+          <span class="term">100 × Diversidade</span>
+          <span class="op">=</span>
+          <span class="term gradient-text" style="font-weight:800">Dev Score</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="anti-procrastinacao">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Desafio de hoje</span>
+          <h2>Um empurrão pequeno, nunca uma cobrança</h2>
+        </div>
+        <div class="card tilt-scene reveal" style="max-width:520px;margin:0 auto">
+          <div class="tilt-card challenge-card" data-tilt-max="4" style="border-radius:inherit;padding:24px">
+            <span class="badge yellow">🎯 Desafio de hoje</span>
+            <p style="margin-top:14px;font-size:14.5px;line-height:1.6;color:var(--text-1)">
+              Você está há 3 dias sem atividade. Desafio de hoje:
+              <strong style="color:var(--text-0)">criar um teste para o endpoint /login.</strong>
+            </p>
+            <div class="challenge-meta">
+              <span class="badge brand">⏱ 20 minutos</span>
+              <span class="badge muted">Fácil</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-box reveal">
+          <h2>Comece a medir sua evolução hoje</h2>
+          <p>Grátis, sem cartão de crédito. Conecte o GitHub quando quiser.</p>
+          <a href="register.html" class="btn btn-primary">Criar minha conta</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">DevMetrics — projeto de portfólio, código aberto para estudo.</div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/scene3d.js"></script>
+</body>
+</html>

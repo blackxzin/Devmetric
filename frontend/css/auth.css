@@ -1,0 +1,213 @@
+/* ===========================================================
+   DevMetrics — Telas de autenticação (login / registro)
+   =========================================================== */
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+
+.auth-side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 60% at 30% 20%, rgba(124, 92, 255, 0.35), transparent 70%),
+    radial-gradient(50% 50% at 80% 80%, rgba(51, 214, 255, 0.25), transparent 70%),
+    var(--bg-1);
+  border-right: 1px solid var(--border);
+}
+
+.auth-side .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 17px;
+  z-index: 2;
+}
+
+.auth-side .brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--grad-brand);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: #05060a;
+}
+
+.auth-hero {
+  z-index: 2;
+  max-width: 460px;
+}
+
+.auth-hero h1 {
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+
+.auth-hero p {
+  color: var(--text-1);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.auth-hero-stats {
+  display: flex;
+  gap: 22px;
+  margin-top: 28px;
+}
+
+.auth-hero-stats div strong {
+  display: block;
+  font-size: 22px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+}
+
+.auth-hero-stats div span {
+  font-size: 11.5px;
+  color: var(--text-2);
+}
+
+.auth-side .mini-note {
+  z-index: 2;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* Cena 3D decorativa (cubo isométrico flutuante feito em CSS puro) */
+.auth-cube-scene {
+  position: absolute;
+  right: -60px;
+  bottom: -40px;
+  width: 320px;
+  height: 320px;
+  perspective: 900px;
+  z-index: 1;
+  opacity: 0.9;
+}
+
+.auth-cube {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 160px;
+  height: 160px;
+  top: 60px;
+  left: 60px;
+  transform-style: preserve-3d;
+  animation: cube-spin 14s linear infinite;
+}
+
+@keyframes cube-spin {
+  from { transform: rotateX(-18deg) rotateY(0deg); }
+  to   { transform: rotateX(-18deg) rotateY(360deg); }
+}
+
+.auth-cube .face {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(140deg, rgba(124, 92, 255, 0.35), rgba(51, 214, 255, 0.12));
+  backdrop-filter: blur(2px);
+  border-radius: 14px;
+}
+
+.auth-cube .face.front  { transform: translateZ(80px); }
+.auth-cube .face.back   { transform: translateZ(-80px) rotateY(180deg); }
+.auth-cube .face.right  { transform: rotateY(90deg) translateZ(80px); }
+.auth-cube .face.left   { transform: rotateY(-90deg) translateZ(80px); }
+.auth-cube .face.top    { transform: rotateX(90deg) translateZ(80px); background: linear-gradient(140deg, rgba(255, 94, 203, 0.3), rgba(124, 92, 255, 0.12)); }
+.auth-cube .face.bottom { transform: rotateX(-90deg) translateZ(80px); }
+
+.auth-form-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+  position: relative;
+}
+
+.auth-form-box {
+  width: 100%;
+  max-width: 380px;
+  animation: fade-up var(--dur-slow) var(--ease-out);
+}
+
+.auth-form-box h2 {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.auth-form-box .auth-sub {
+  color: var(--text-2);
+  font-size: 13.5px;
+  margin-bottom: 26px;
+}
+
+.auth-form-box .btn-primary {
+  width: 100%;
+  margin-top: 6px;
+  padding: 13px 22px;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 22px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.auth-switch a {
+  color: var(--brand-2);
+  font-weight: 600;
+}
+
+.auth-error-banner {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 92, 114, 0.1);
+  border: 1px solid rgba(255, 92, 114, 0.35);
+  color: #ffb3bd;
+  font-size: 13px;
+  margin-bottom: 18px;
+  animation: pop-in var(--dur-mid) var(--ease-spring);
+}
+
+.auth-error-banner.visible {
+  display: flex;
+}
+
+.password-strength {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.password-strength span {
+  height: 3px;
+  flex: 1;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: background var(--dur-fast) ease;
+}
+
+@media (max-width: 900px) {
+  .auth-page { grid-template-columns: 1fr; }
+  .auth-side { display: none; }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub — DevMetrics</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%237c5cff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>D</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <div class="scene-bg"></div>
+  <div id="navbar" data-active="github"></div>
+
+  <main class="page container">
+    <div class="page-head reveal">
+      <div>
+        <h1>Conexão com GitHub</h1>
+        <div class="page-sub">Importa commits, PRs, issues e tecnologias automaticamente. Acesso somente leitura.</div>
+      </div>
+    </div>
+
+    <div class="card tilt-card reveal" data-tilt-max="3" id="statusCard">
+      <div class="tilt-layer github-card">
+        <div class="github-status-line">
+          <div class="skeleton" style="width:120px;height:16px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-top:18px">
+      <div class="card-header"><div class="card-title">🕘 Sincronizações recentes</div></div>
+      <div id="syncHistory"><div class="empty-state">Conecte sua conta para ver o histórico.</div></div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/scene3d.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/github.js"></script>
+</body>
+</html>

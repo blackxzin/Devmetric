@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atividades — DevMetrics</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%237c5cff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>D</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <div class="scene-bg"></div>
+  <div id="navbar" data-active="activities"></div>
+
+  <main class="page container">
+    <div class="page-head reveal">
+      <div>
+        <h1>Atividades</h1>
+        <div class="page-sub">Tudo que você registrou, manual ou importado do GitHub.</div>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-primary" id="newActivityBtn">+ Nova atividade</button>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="filter-bar">
+        <select id="filterType">
+          <option value="">Todos os tipos</option>
+        </select>
+        <select id="filterSource">
+          <option value="">Toda origem</option>
+          <option value="MANUAL">Manual</option>
+          <option value="GITHUB">GitHub</option>
+        </select>
+        <input type="date" id="filterFrom" title="De" />
+        <input type="date" id="filterTo" title="Até" />
+      </div>
+      <div id="activityList"></div>
+      <div id="activityPagination" style="display:flex;justify-content:center;gap:8px;margin-top:18px"></div>
+    </div>
+  </main>
+
+  <!-- Modal de nova/edição de atividade -->
+  <div class="modal-overlay" id="activityModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Nova atividade</h3>
+        <button class="modal-close" data-modal-close>✕</button>
+      </div>
+      <form id="activityForm">
+        <input type="hidden" id="activityId" />
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="activityType">Tipo</label>
+            <select id="activityType" required></select>
+          </div>
+          <div class="field">
+            <label for="activityOccurredAt">Quando</label>
+            <input type="datetime-local" id="activityOccurredAt" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="activityTitle">Título</label>
+          <input type="text" id="activityTitle" maxlength="255" required placeholder="Ex: Teste do endpoint /login" />
+        </div>
+        <div class="field">
+          <label for="activityDescription">Descrição (opcional)</label>
+          <textarea id="activityDescription" maxlength="2000" placeholder="Detalhes do que foi feito"></textarea>
+        </div>
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="activityProject">Projeto (opcional)</label>
+            <select id="activityProject"><option value="">Nenhum</option></select>
+          </div>
+          <div class="field">
+            <label for="activityTechnology">Tecnologia (opcional)</label>
+            <select id="activityTechnology"><option value="">Nenhuma</option></select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="activitySubmitBtn" style="width:100%;margin-top:8px">Salvar atividade</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/scene3d.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/activities.js"></script>
+</body>
+</html>

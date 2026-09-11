@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projetos — DevMetrics</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%237c5cff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>D</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <div class="scene-bg"></div>
+  <div id="navbar" data-active="projects"></div>
+
+  <main class="page container">
+    <div class="page-head reveal">
+      <div>
+        <h1>Projetos</h1>
+        <div class="page-sub">Seus projetos manuais e os importados do GitHub.</div>
+      </div>
+      <div class="page-actions">
+        <button class="btn" id="toggleArchivedBtn">Mostrar arquivados</button>
+        <button class="btn btn-primary" id="newProjectBtn">+ Novo projeto</button>
+      </div>
+    </div>
+
+    <div id="projectGrid" class="project-grid reveal-stagger"></div>
+  </main>
+
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Novo projeto</h3>
+        <button class="modal-close" data-modal-close>✕</button>
+      </div>
+      <form id="projectForm">
+        <div class="field">
+          <label for="projectName">Nome</label>
+          <input type="text" id="projectName" maxlength="140" required placeholder="Ex: DevMetrics API" />
+        </div>
+        <div class="field">
+          <label for="projectDescription">Descrição</label>
+          <textarea id="projectDescription" maxlength="2000" placeholder="O que esse projeto faz"></textarea>
+        </div>
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="projectStartedAt">Início</label>
+            <input type="date" id="projectStartedAt" required />
+          </div>
+          <div class="field">
+            <label for="projectRepoUrl">URL do repositório (opcional)</label>
+            <input type="url" id="projectRepoUrl" placeholder="https://github.com/..." />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="projectSubmitBtn" style="width:100%;margin-top:8px">Criar projeto</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/scene3d.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/projects.js"></script>
+</body>
+</html>

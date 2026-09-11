@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configurações — DevMetrics</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%237c5cff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>D</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <div class="scene-bg"></div>
+  <div id="navbar" data-active="settings"></div>
+
+  <main class="page container" style="max-width:760px">
+    <div class="page-head reveal">
+      <div>
+        <h1>Configurações</h1>
+        <div class="page-sub">Perfil e regras de pontuação.</div>
+      </div>
+    </div>
+
+    <div class="tabs reveal">
+      <div class="tab active" data-tab="profile">Perfil</div>
+      <div class="tab" data-tab="scoring">Pontuação</div>
+    </div>
+
+    <div id="tab-profile" class="reveal">
+      <div class="card">
+        <div class="card-header"><div class="card-title">👤 Perfil</div></div>
+        <form id="profileForm">
+          <div class="field">
+            <label for="displayName">Nome</label>
+            <input type="text" id="displayName" maxlength="80" required />
+          </div>
+          <div class="form-grid-2">
+            <div class="field">
+              <label for="timezone">Fuso horário</label>
+              <input type="text" id="timezone" placeholder="America/Sao_Paulo" />
+            </div>
+            <div class="field">
+              <label for="weeklyGoalPoints">Meta semanal (pontos)</label>
+              <input type="number" id="weeklyGoalPoints" min="10" max="5000" />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Salvar alterações</button>
+        </form>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <div class="card-header"><div class="card-title">🔒 Trocar senha</div></div>
+        <form id="passwordForm">
+          <div class="form-grid-2">
+            <div class="field">
+              <label for="currentPassword">Senha atual</label>
+              <input type="password" id="currentPassword" required />
+            </div>
+            <div class="field">
+              <label for="newPassword">Nova senha</label>
+              <input type="password" id="newPassword" minlength="8" required />
+            </div>
+          </div>
+          <button type="submit" class="btn">Atualizar senha</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="tab-scoring" class="reveal" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">⚙️ Regras de pontuação</div>
+          <button class="btn btn-ghost" id="recalcFromSettings">🔄 Recalcular</button>
+        </div>
+        <p class="text-muted" style="font-size:13px;margin-bottom:14px">
+          Editáveis por você. O rendimento decrescente (base/n) é o que evita que repetir a mesma
+          atividade seja o jeito fácil de subir de pontuação.
+        </p>
+        <div id="rulesList"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/scene3d.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

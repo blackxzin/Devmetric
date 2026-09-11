@@ -1,0 +1,9 @@
+logging:
+  level:
+    com.devmetrics: DEBUG
+    org.hibernate.SQL: DEBUG
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true

@@ -1,0 +1,288 @@
+/* ===========================================================
+   DevMetrics — Layout do dashboard
+   =========================================================== */
+
+.page {
+  padding: 28px 0 80px;
+}
+
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.page-head h1 {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.page-head .page-sub {
+  color: var(--text-2);
+  font-size: 13.5px;
+  margin-top: 4px;
+}
+
+.page-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+  gap: 18px;
+  align-items: start;
+}
+
+.dash-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.score-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.score-level-badge {
+  margin-top: 4px;
+}
+
+.score-trend-line {
+  font-size: 12.5px;
+  color: var(--text-2);
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.streak-body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.streak-flame-big {
+  font-size: 46px;
+  line-height: 1;
+}
+
+.streak-numbers strong {
+  font-size: 28px;
+  font-family: var(--font-mono);
+  font-weight: 800;
+}
+
+.streak-numbers .streak-label {
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.streak-sub {
+  display: flex;
+  gap: 18px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.streak-sub div strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 16px;
+}
+
+.streak-sub div span {
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.tech-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  transition: transform var(--dur-fast) var(--ease-spring), border-color var(--dur-fast) ease;
+}
+
+.tech-pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+}
+
+.tech-pill.is-new {
+  border-color: rgba(255, 203, 82, 0.45);
+  background: rgba(255, 203, 82, 0.08);
+}
+
+.tech-pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-2);
+}
+
+.chart-canvas-wrap {
+  position: relative;
+  height: 160px;
+}
+
+.next-step-card {
+  background: linear-gradient(160deg, rgba(51, 214, 255, 0.12), rgba(124, 92, 255, 0.05));
+  border-color: rgba(51, 214, 255, 0.3);
+}
+
+.next-step-tech {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.next-step-tech .tech-badge-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--grad-brand);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.next-step-reason {
+  font-size: 13px;
+  color: var(--text-1);
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+.next-step-first {
+  font-size: 12.5px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border);
+  color: var(--text-1);
+}
+
+.next-step-first strong {
+  color: var(--text-0);
+}
+
+@media (max-width: 1100px) {
+  .dash-grid { grid-template-columns: 1fr 1fr; }
+  .dash-col:nth-child(3) { grid-column: span 2; }
+}
+
+@media (max-width: 720px) {
+  .dash-grid { grid-template-columns: 1fr; }
+  .dash-col:nth-child(3) { grid-column: span 1; }
+}
+
+/* Formulário de nova atividade (grid) */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 14px;
+}
+
+@media (max-width: 560px) {
+  .form-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* Projetos */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.project-card {
+  padding: 20px;
+}
+
+.project-card .project-name {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.project-card .project-desc {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 12px;
+  min-height: 34px;
+}
+
+.project-card .project-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* Filtros de atividade */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.filter-bar select,
+.filter-bar input {
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-0);
+  font-size: 13px;
+}
+
+/* Github connection card */
+.github-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.github-status-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-1);
+}
+
+.sync-progress {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 8px;
+}

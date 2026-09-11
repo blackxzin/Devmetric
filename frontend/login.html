@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entrar — DevMetrics</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%237c5cff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>D</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+  <div class="auth-page">
+    <aside class="auth-side">
+      <div class="brand">
+        <span class="brand-mark">D</span>
+        DevMetrics
+      </div>
+
+      <div class="auth-hero">
+        <h1>Sua evolução como <span class="gradient-text">desenvolvedor</span>, medida de verdade.</h1>
+        <p>Commits, PRs, testes, documentação, estudos e tecnologias novas — tudo virando um Dev Score que você consegue explicar.</p>
+        <div class="auth-hero-stats">
+          <div><strong>5</strong><span>Componentes do score</span></div>
+          <div><strong>12</strong><span>Tipos de atividade</span></div>
+          <div><strong>0</strong><span>IA no cálculo</span></div>
+        </div>
+      </div>
+
+      <div class="mini-note">Projeto de portfólio — Java, Spring Boot e PostgreSQL.</div>
+
+      <div class="auth-cube-scene">
+        <div class="auth-cube">
+          <div class="face front"></div>
+          <div class="face back"></div>
+          <div class="face right"></div>
+          <div class="face left"></div>
+          <div class="face top"></div>
+          <div class="face bottom"></div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="auth-form-side">
+      <div class="auth-form-box">
+        <h2>Bem-vindo de volta</h2>
+        <p class="auth-sub">Entre para ver sua evolução de hoje.</p>
+
+        <div class="auth-error-banner" id="errorBanner">
+          <span>⚠️</span><span id="errorText"></span>
+        </div>
+
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" autocomplete="email" required placeholder="voce@email.com" />
+          </div>
+          <div class="field">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" required placeholder="••••••••" />
+          </div>
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <span id="submitLabel">Entrar</span>
+          </button>
+        </form>
+
+        <p class="auth-switch">Ainda não tem conta? <a href="register.html">Criar conta gratuita</a></p>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script>
+    if (Api.isAuthenticated()) {
+      location.href = "dashboard.html";
+    }
+
+    const params = new URLSearchParams(location.search);
+    if (params.get("expired") === "1") {
+      Toast.info("Sua sessão expirou. Entre novamente.");
+    }
+
+    const form = document.getElementById("loginForm");
+    const errorBanner = document.getElementById("errorBanner");
+    const errorText = document.getElementById("errorText");
+    const submitBtn = document.getElementById("submitBtn");
+    const submitLabel = document.getElementById("submitLabel");
+
+    function showError(message) {
+      errorText.textContent = message;
+      errorBanner.classList.add("visible");
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      errorBanner.classList.remove("visible");
+      submitBtn.disabled = true;
+      submitLabel.innerHTML = '<span class="spinner"></span> Entrando...';
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        await Api.login(email, password);
+        Toast.success("Login realizado!");
+        setTimeout(() => (location.href = "dashboard.html"), 300);
+      } catch (error) {
+        showError(error.message || "Não foi possível entrar. Tente novamente.");
+        submitBtn.disabled = false;
+        submitLabel.textContent = "Entrar";
+      }
+    });
+  </script>
+</body>
+</html>

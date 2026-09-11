@@ -1,0 +1,7 @@
+logging:
+  level:
+    root: WARN
+    com.devmetrics: INFO
+server:
+  error:
+    include-message: never

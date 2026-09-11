@@ -1,0 +1,80 @@
+spring:
+  application:
+    name: devmetrics-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/devmetrics}
+    username: ${DB_USER:devmetrics}
+    password: ${DB_PASSWORD:devmetrics}
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+          batch_size: 50
+        order_inserts: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+  task:
+    execution:
+      pool:
+        core-size: 2
+        max-size: 4
+        queue-capacity: 50
+
+server:
+  port: 8080
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+
+devmetrics:
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
+  frontend-url: ${FRONTEND_URL:http://localhost:3000}
+  jwt:
+    secret: ${JWT_SECRET:troque-esta-chave-em-producao-com-no-minimo-32-bytes}
+    access-ttl-minutes: ${JWT_ACCESS_TTL_MINUTES:15}
+    refresh-ttl-days: ${JWT_REFRESH_TTL_DAYS:7}
+  security:
+    token-encryption-key: ${TOKEN_ENCRYPTION_KEY:devmetrics-chave-aes-local-32ch!}
+  github:
+    client-id: ${GITHUB_CLIENT_ID:}
+    client-secret: ${GITHUB_CLIENT_SECRET:}
+    redirect-uri: ${GITHUB_REDIRECT_URI:http://localhost:8080/api/v1/github/callback}
+    api-base-url: https://api.github.com
+    oauth-base-url: https://github.com
+    first-sync-days: 90
+    max-repos-per-sync: 60
+    max-commit-details-per-sync: 200
+    min-minutes-between-syncs: 10
+  scoring:
+    window-days: 90
+    new-technology-bonus: 0.5
