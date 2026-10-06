@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/github")
@@ -30,13 +33,25 @@ public class GitHubController {
     private final GitHubOAuthService oAuthService;
     private final GitHubSyncService syncService;
     private final GitHubSyncRunner syncRunner;
+    private final GitHubWebhookService webhookService;
 
     public GitHubController(GitHubOAuthService oAuthService,
                             GitHubSyncService syncService,
-                            GitHubSyncRunner syncRunner) {
+                            GitHubSyncRunner syncRunner,
+                            GitHubWebhookService webhookService) {
         this.oAuthService = oAuthService;
         this.syncService = syncService;
         this.syncRunner = syncRunner;
+        this.webhookService = webhookService;
+    }
+
+    @PostMapping("/webhook")
+    @Operation(summary = "Recebe eventos push do GitHub (assinados com GITHUB_WEBHOOK_SECRET)")
+    public ApiResponse<Map<String, Integer>> webhook(
+            @RequestHeader(value = "X-GitHub-Event", defaultValue = "") String event,
+            @RequestHeader(value = "X-Hub-Signature-256", required = false) String signature,
+            @RequestBody byte[] body) {
+        return ApiResponse.ok(Map.of("activitiesCreated", webhookService.handle(event, signature, body)));
     }
 
     @GetMapping("/authorize-url")

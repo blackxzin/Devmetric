@@ -4,7 +4,10 @@ import com.devmetrics.auth.dto.AuthResponse;
 import com.devmetrics.auth.dto.LoginRequest;
 import com.devmetrics.auth.dto.RefreshRequest;
 import com.devmetrics.auth.dto.RegisterRequest;
+import com.devmetrics.common.exception.BusinessException;
+import com.devmetrics.common.exception.ErrorCode;
 import com.devmetrics.common.response.ApiResponse;
+import com.devmetrics.demo.DemoDataService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -21,9 +24,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final DemoDataService demoDataService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, DemoDataService demoDataService) {
         this.authService = authService;
+        this.demoDataService = demoDataService;
+    }
+
+    @PostMapping("/demo")
+    @Operation(summary = "Entra na conta demo (so quando DEMO_ENABLED=true)")
+    public ApiResponse<AuthResponse> demo() {
+        if (!demoDataService.enabled()) {
+            throw new BusinessException(ErrorCode.DEMO_DISABLED);
+        }
+        return ApiResponse.ok(authService.demoLogin(demoDataService.email()));
     }
 
     @PostMapping("/register")

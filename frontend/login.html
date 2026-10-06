@@ -68,6 +68,10 @@
           </button>
         </form>
 
+        <button type="button" class="btn btn-ghost" id="demoBtn" style="width:100%;margin-top:10px">
+          👀 Ver demo sem criar conta
+        </button>
+
         <p class="auth-switch">Ainda não tem conta? <a href="register.html">Criar conta gratuita</a></p>
       </div>
     </section>
@@ -95,6 +99,16 @@
       errorText.textContent = message;
       errorBanner.classList.add("visible");
     }
+
+    document.getElementById("demoBtn").addEventListener("click", async () => {
+      errorBanner.classList.remove("visible");
+      try {
+        await Api.demo();
+        location.href = "dashboard.html";
+      } catch (error) {
+        showError(error.message || "Demo indisponível.");
+      }
+    });
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();

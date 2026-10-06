@@ -9,6 +9,9 @@ async function loadProfile() {
     document.getElementById("displayName").value = profile.user.displayName;
     document.getElementById("timezone").value = profile.user.timezone;
     document.getElementById("weeklyGoalPoints").value = profile.user.weeklyGoalPoints;
+    document.getElementById("username").value = profile.user.username || "";
+    document.getElementById("publicProfile").checked = profile.user.publicProfile;
+    renderPublicLinks(profile.user);
   } catch (error) {
     Toast.error(error.message);
   }
@@ -28,6 +31,35 @@ document.getElementById("profileForm").addEventListener("submit", async (event) 
       Api.writeAuth(auth);
     }
     Toast.success("Perfil atualizado.");
+  } catch (error) {
+    Toast.error(error.message);
+  }
+});
+
+function renderPublicLinks(user) {
+  const container = document.getElementById("publicLinks");
+  if (!user.publicProfile || !user.username) {
+    container.innerHTML = "";
+    return;
+  }
+  const profileUrl = new URL(`profile.html?u=${encodeURIComponent(user.username)}`, location.href).href;
+  const badgeUrl = `${Api.baseUrl}/public/u/${encodeURIComponent(user.username)}/badge.svg`;
+  container.innerHTML = `
+    <div class="list-sub">Seu perfil: <a href="${escapeHtml(profileUrl)}" target="_blank" rel="noopener">${escapeHtml(profileUrl)}</a></div>
+    <div class="list-sub" style="margin-top:6px">Markdown para o README:</div>
+    <pre class="mono" style="white-space:pre-wrap;word-break:break-all;font-size:12px">[![DevMetrics](${escapeHtml(badgeUrl)})](${escapeHtml(profileUrl)})</pre>`;
+}
+
+document.getElementById("publicForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const username = document.getElementById("username").value.trim();
+  try {
+    const user = await Api.patch("/users/me", {
+      username: username || undefined,
+      publicProfile: document.getElementById("publicProfile").checked,
+    });
+    renderPublicLinks(user);
+    Toast.success(user.publicProfile ? "Perfil público ativo." : "Perfil público desligado.");
   } catch (error) {
     Toast.error(error.message);
   }

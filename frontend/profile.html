@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil — DevMetrics</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%237c5cff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>D</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/calendar.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <style>
+    .profile-head { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .profile-head .avatar { width: 72px; height: 72px; font-size: 26px; }
+    .profile-score { font-size: 56px; font-weight: 800; line-height: 1; background: var(--grad-brand);
+      -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .profile-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-top: 18px; }
+    .profile-stats .card { text-align: center; }
+    .profile-stats strong { display: block; font-size: 28px; }
+    .chip-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  </style>
+</head>
+<body>
+  <div class="scene-bg"></div>
+  <div class="container navbar">
+    <a href="index.html" class="brand"><span class="brand-mark floating-icon">D</span> DevMetrics</a>
+    <nav></nav>
+    <a href="register.html" class="btn btn-primary">Criar meu perfil</a>
+  </div>
+
+  <main class="page container" style="max-width:980px">
+    <div id="profileRoot"><div class="skeleton" style="height:240px"></div></div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/scene3d.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

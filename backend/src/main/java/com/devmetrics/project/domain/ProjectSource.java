@@ -2,5 +2,6 @@ package com.devmetrics.project.domain;
 
 public enum ProjectSource {
     MANUAL,
-    GITHUB
+    GITHUB,
+    GITLAB
 }

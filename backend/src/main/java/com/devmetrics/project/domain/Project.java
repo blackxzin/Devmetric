@@ -72,11 +72,16 @@ public class Project extends BaseEntity {
 
     public static Project fromGitHub(User user, String name, String description,
                                      String externalId, String repoUrl, LocalDate startedAt) {
+        return imported(user, ProjectSource.GITHUB, name, description, externalId, repoUrl, startedAt);
+    }
+
+    public static Project imported(User user, ProjectSource source, String name, String description,
+                                   String externalId, String repoUrl, LocalDate startedAt) {
         Project project = new Project();
         project.user = user;
         project.name = name.trim();
         project.description = description;
-        project.source = ProjectSource.GITHUB;
+        project.source = source;
         project.externalId = externalId;
         project.repoUrl = repoUrl;
         project.startedAt = startedAt == null ? LocalDate.now() : startedAt;
@@ -114,7 +119,7 @@ public class Project extends BaseEntity {
     }
 
     public boolean isReadOnly() {
-        return source == ProjectSource.GITHUB;
+        return source != ProjectSource.MANUAL;
     }
 
     public void replaceTechnologies(Set<Technology> newTechnologies) {

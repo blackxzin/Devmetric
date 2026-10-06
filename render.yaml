@@ -1,0 +1,57 @@
+# Blueprint do Render (render.com -> New -> Blueprint -> aponte para este repositorio).
+# Sobe banco + API + frontend. Variaveis com "sync: false" sao pedidas no painel.
+databases:
+  - name: devmetrics-db
+    plan: free
+    databaseName: devmetrics
+    user: devmetrics
+
+services:
+  - type: web
+    name: devmetrics-api
+    runtime: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DB_HOST
+        fromDatabase: { name: devmetrics-db, property: host }
+      - key: DB_PORT
+        fromDatabase: { name: devmetrics-db, property: port }
+      - key: DB_NAME
+        fromDatabase: { name: devmetrics-db, property: database }
+      - key: DB_USER
+        fromDatabase: { name: devmetrics-db, property: user }
+      - key: DB_PASSWORD
+        fromDatabase: { name: devmetrics-db, property: password }
+      - key: JWT_SECRET
+        generateValue: true
+      - key: TOKEN_ENCRYPTION_KEY # exatamente 32 caracteres
+        sync: false
+      - key: DEMO_ENABLED
+        value: "true"
+      - key: FRONTEND_URL # ex.: https://devmetrics-web.onrender.com
+        sync: false
+      - key: CORS_ORIGINS # mesmo valor do FRONTEND_URL
+        sync: false
+      - key: GITHUB_CLIENT_ID
+        sync: false
+      - key: GITHUB_CLIENT_SECRET
+        sync: false
+      - key: GITHUB_REDIRECT_URI # ex.: https://devmetrics-web.onrender.com/api/v1/github/callback
+        sync: false
+      - key: GITHUB_WEBHOOK_SECRET
+        sync: false
+      - key: ANTHROPIC_API_KEY # opcional: desafios reescritos pelo Claude
+        sync: false
+
+  - type: web
+    name: devmetrics-web
+    runtime: docker
+    rootDir: frontend
+    plan: free
+    envVars:
+      - key: API_UPSTREAM # ex.: https://devmetrics-api.onrender.com
+        sync: false

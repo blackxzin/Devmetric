@@ -102,7 +102,9 @@ Tom: sempre tarefa pequena, com tempo estimado, sem cobrança. "Faltam X dias" n
 - Regras de co-ocorrência: `Java+Spring` sem `Docker` → sugerir Docker;
   sem `TEST` em 30d → sugerir JUnit; `JUnit` mas sem `Testcontainers`; sem CI → GitHub Actions;
   3+ projetos backend sem banco → PostgreSQL.
-- Tabela `technology_suggestion_rules` (condição em `jsonb`) para não hardcodar.
+- ~~Tabela `technology_suggestion_rules` (condição em `jsonb`)~~ — decisão revista: as regras ficaram
+  como lista de `Predicate` em `NextStepService`. São poucas, mudam junto com o código e uma tabela
+  com condição em `jsonb` exigiria um mini-interpretador sem ganho real. Revisitar se virarem dezenas.
 - `GET /insights/next-step` com justificativa e primeiro passo concreto.
 
 ## Etapa 10 — Histórico
@@ -119,13 +121,20 @@ Tom: sempre tarefa pequena, com tempo estimado, sem cobrança. "Faltam X dias" n
 - GitHub Actions: build + testes + relatório JaCoCo.
 - Revisão de segurança: segredos, isolamento por usuário, validação de entrada.
 
-## Backlog pós-MVP
+## Pós-MVP
 
-- IA para gerar desafios e recomendações (a partir do mesmo contexto que as regras já montam);
-- webhooks do GitHub (sync em tempo real);
-- exportar perfil público (`/u/{username}`) — ótimo para link no currículo;
+Feito:
+
+- desafio reescrito pelo Claude (`ChallengeAiWriter`), com as regras como fallback;
+- webhook do GitHub (push em tempo real, HMAC);
+- perfil público `/u/{username}` + card SVG para README;
+- GitLab (token pessoal, gitlab.com e self-hosted);
+- conta demo, CI (GitHub Actions + JaCoCo), testes de integração com Testcontainers, blueprint do Render.
+
+Backlog:
+
 - migração do frontend para React, consumindo a mesma API sem alteração no backend;
-- GitLab e Bitbucket.
+- Bitbucket (mesmo pipeline do GitLab; baixa demanda no público-alvo).
 
 ## Ritmo sugerido
 

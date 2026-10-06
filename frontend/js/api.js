@@ -7,7 +7,10 @@
  */
 
 const Api = (() => {
-  const BASE_URL = window.DEVMETRICS_API_URL || "http://localhost:8080/api/v1";
+  // Servido pelo nginx, a API fica em /api/v1 no mesmo dominio (proxy). Abrindo os
+  // arquivos direto do disco, aponta para a API local.
+  const BASE_URL = window.DEVMETRICS_API_URL
+    || (location.protocol === "file:" ? "http://localhost:8080/api/v1" : "/api/v1");
   const STORAGE_KEY = "devmetrics.auth";
 
   let refreshPromise = null;
@@ -139,6 +142,7 @@ const Api = (() => {
   }
 
   return {
+    baseUrl: new URL(BASE_URL, location.href).href,
     ApiError,
     isAuthenticated,
     currentUser,
@@ -167,6 +171,11 @@ const Api = (() => {
 
     async login(email, password) {
       const data = await this.post("/auth/login", { email, password });
+      writeAuth(data);
+      return data;
+    },
+    async demo() {
+      const data = await this.post("/auth/demo");
       writeAuth(data);
       return data;
     },

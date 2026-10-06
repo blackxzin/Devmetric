@@ -115,10 +115,17 @@ public class DashboardService {
     public CalendarResponse calendar(User user, Integer year) {
         LocalDate today = LocalDate.now(user.zoneId());
         int targetYear = year == null ? today.getYear() : year;
+        return calendarBetween(user, LocalDate.of(targetYear, 1, 1), LocalDate.of(targetYear, 12, 31));
+    }
 
-        LocalDate from = LocalDate.of(targetYear, 1, 1);
-        LocalDate to = LocalDate.of(targetYear, 12, 31);
+    /** Ultimos 365 dias terminando hoje: usado pelo perfil publico e pelo badge. */
+    @Transactional(readOnly = true)
+    public CalendarResponse lastYear(User user) {
+        LocalDate today = LocalDate.now(user.zoneId());
+        return calendarBetween(user, today.minusDays(364), today);
+    }
 
+    private CalendarResponse calendarBetween(User user, LocalDate from, LocalDate to) {
         Map<LocalDate, DailyStat> statsByDate = new HashMap<>();
         for (DailyStat stat : dailyStatRepository
                 .findByUserIdAndStatDateBetweenOrderByStatDateAsc(user.getId(), from, to)) {
@@ -140,7 +147,7 @@ public class DashboardService {
             totalPoints = totalPoints.add(orZero(stat.getRawPoints()));
         }
 
-        return new CalendarResponse(targetYear, from, to, totalActivities, totalPoints,
+        return new CalendarResponse(to.getYear(), from, to, totalActivities, totalPoints,
                 statsByDate.size(), days);
     }
 

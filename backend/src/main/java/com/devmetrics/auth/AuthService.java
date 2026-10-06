@@ -56,6 +56,14 @@ public class AuthService {
         return issueTokens(user);
     }
 
+    /** Entra na conta demo sem senha. So existe quando DEMO_ENABLED=true. */
+    @Transactional
+    public AuthResponse demoLogin(String demoEmail) {
+        User user = userRepository.findByEmailIgnoreCase(demoEmail)
+                .orElseThrow(() -> new BusinessException(ErrorCode.DEMO_DISABLED));
+        return issueTokens(user);
+    }
+
     @Transactional
     public AuthResponse refresh(String rawRefreshToken) {
         String hash = jwtService.hashRefreshToken(rawRefreshToken);

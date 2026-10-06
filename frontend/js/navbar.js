@@ -15,7 +15,7 @@
     { key: "projects", href: "projects.html", label: "Projetos" },
     { key: "achievements", href: "achievements.html", label: "Conquistas" },
     { key: "history", href: "history.html", label: "Histórico" },
-    { key: "github", href: "github.html", label: "GitHub" },
+    { key: "github", href: "github.html", label: "Integrações" },
     { key: "settings", href: "settings.html", label: "Configurações" },
   ];
 

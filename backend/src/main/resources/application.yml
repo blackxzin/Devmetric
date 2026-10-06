@@ -2,7 +2,7 @@ spring:
   application:
     name: devmetrics-api
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/devmetrics}
+    url: ${DB_URL:jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:devmetrics}}
     username: ${DB_USER:devmetrics}
     password: ${DB_PASSWORD:devmetrics}
     hikari:
@@ -75,6 +75,18 @@ devmetrics:
     max-repos-per-sync: 60
     max-commit-details-per-sync: 200
     min-minutes-between-syncs: 10
+    webhook-secret: ${GITHUB_WEBHOOK_SECRET:}
+  gitlab:
+    default-base-url: https://gitlab.com
+    first-sync-days: 90
+    max-projects-per-sync: 60
+    max-commit-details-per-sync: 200
   scoring:
     window-days: 90
     new-technology-bonus: 0.5
+  demo:
+    enabled: ${DEMO_ENABLED:false}
+    email: demo@devmetrics.dev
+  ai:
+    anthropic-api-key: ${ANTHROPIC_API_KEY:}
+    model: ${ANTHROPIC_MODEL:claude-opus-5-5}

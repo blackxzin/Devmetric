@@ -38,6 +38,8 @@ const Toast = (() => {
   };
 })();
 
+const SOURCE_LABELS = { MANUAL: "Manual", GITHUB: "GitHub", GITLAB: "GitLab" };
+
 function escapeHtml(value) {
   const div = document.createElement("div");
   div.textContent = value == null ? "" : String(value);

@@ -16,8 +16,11 @@ class TokenCipherTest {
             new AppProperties.Jwt("chave-de-teste-com-mais-de-32-caracteres-ok", 15, 7),
             new AppProperties.Security("devmetrics-chave-aes-local-32ch!"),
             new AppProperties.GitHub("", "", "", "https://api.github.com",
-                    "https://github.com", 90, 60, 200, 10),
-            new AppProperties.Scoring(90, 0.5)));
+                    "https://github.com", 90, 60, 200, 10, ""),
+                new AppProperties.GitLab("https://gitlab.com", 90, 60, 200),
+            new AppProperties.Scoring(90, 0.5),
+                new AppProperties.Demo(false, "demo@devmetrics.dev"),
+                new AppProperties.Ai("", "claude-opus-5-5")));
 
     @Test
     @DisplayName("o token cifrado volta ao original")
