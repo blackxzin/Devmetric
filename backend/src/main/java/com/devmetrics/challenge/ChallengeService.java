@@ -44,19 +44,22 @@ public class ChallengeService {
     private final UserTechnologyRepository userTechnologyRepository;
     private final ChallengeGenerator generator;
     private final DevScoreCalculator devScoreCalculator;
+    private final ChallengeAiWriter aiWriter;
 
     public ChallengeService(DailyChallengeRepository dailyChallengeRepository,
                             ChallengeTemplateRepository templateRepository,
                             ActivityRepository activityRepository,
                             UserTechnologyRepository userTechnologyRepository,
                             ChallengeGenerator generator,
-                            DevScoreCalculator devScoreCalculator) {
+                            DevScoreCalculator devScoreCalculator,
+                            ChallengeAiWriter aiWriter) {
         this.dailyChallengeRepository = dailyChallengeRepository;
         this.templateRepository = templateRepository;
         this.activityRepository = activityRepository;
         this.userTechnologyRepository = userTechnologyRepository;
         this.generator = generator;
         this.devScoreCalculator = devScoreCalculator;
+        this.aiWriter = aiWriter;
     }
 
     @Transactional
@@ -118,8 +121,16 @@ public class ChallengeService {
         ChallengeGenerator.Context context = buildContext(user, today);
         ChallengeTrigger trigger = generator.selectTrigger(context);
         ChallengeTemplate template = pickTemplate(trigger, excludeTemplateId);
+        String lastProject = lastProjectName(user);
         String text = generator.render(template.getDescriptionTemplate(),
-                lastProjectName(user), context.daysSinceLastActivity());
+                lastProject, context.daysSinceLastActivity());
+        if (aiWriter.enabled()) {
+            List<String> technologies = userTechnologyRepository.findAllByUser(user.getId()).stream()
+                    .limit(5)
+                    .map(userTechnology -> userTechnology.getTechnology().getName())
+                    .toList();
+            text = aiWriter.rewrite(text, trigger, context, technologies, lastProject).orElse(text);
+        }
         return dailyChallengeRepository.save(DailyChallenge.create(user, template, today, text));
     }
 

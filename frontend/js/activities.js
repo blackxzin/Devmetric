@@ -95,7 +95,7 @@ function renderActivityList(activities) {
         <div class="list-main">
           <div class="list-title">${escapeHtml(activity.title)}</div>
           <div class="list-sub">
-            ${activity.typeLabel} · ${activity.source === "GITHUB" ? "GitHub" : "Manual"} ·
+            ${activity.typeLabel} · ${SOURCE_LABELS[activity.source] || "Manual"} ·
             ${formatDateTime(activity.occurredAt)}
             ${activity.projectName ? " · " + escapeHtml(activity.projectName) : ""}
           </div>

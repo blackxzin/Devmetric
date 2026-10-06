@@ -131,7 +131,7 @@ public class Activity extends BaseEntity {
     }
 
     public boolean isReadOnly() {
-        return source == ActivitySource.GITHUB;
+        return source != ActivitySource.MANUAL;
     }
 
     public User getUser() {

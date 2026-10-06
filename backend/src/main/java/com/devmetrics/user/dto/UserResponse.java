@@ -12,11 +12,14 @@ public record UserResponse(
         String timezone,
         int weeklyGoalPoints,
         String role,
-        Instant createdAt
+        Instant createdAt,
+        String username,
+        boolean publicProfile
 ) {
 
     public static UserResponse from(User user) {
         return new UserResponse(user.getId(), user.getEmail(), user.getDisplayName(), user.getAvatarUrl(),
-                user.getTimezone(), user.getWeeklyGoalPoints(), user.getRole().name(), user.getCreatedAt());
+                user.getTimezone(), user.getWeeklyGoalPoints(), user.getRole().name(), user.getCreatedAt(),
+                user.getUsername(), user.isPublicProfile());
     }
 }

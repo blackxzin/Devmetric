@@ -162,3 +162,113 @@ if (params.get("github") === "connected") {
 }
 
 loadStatus();
+
+// ---------------------------------------------------------------- GitLab
+
+let gitlabPoll = null;
+
+async function loadGitLab() {
+  const card = document.getElementById("gitlabCard");
+  try {
+    renderGitLab(card, await Api.get("/gitlab/status"));
+  } catch (error) {
+    card.innerHTML = `<div class="empty-state">Erro ao consultar o GitLab: ${escapeHtml(error.message)}</div>`;
+  }
+}
+
+function renderGitLab(card, status) {
+  if (!status.connected) {
+    card.innerHTML = `
+      <p class="text-muted" style="font-size:13px;margin-bottom:12px">
+        Crie um <strong>Personal Access Token</strong> com escopo <span class="mono">read_api</span>
+        em GitLab → Preferences → Access Tokens. Funciona com gitlab.com e instâncias próprias.
+      </p>
+      <form id="gitlabForm">
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="gitlabToken">Token</label>
+            <input type="password" id="gitlabToken" required autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="gitlabUrl">URL (opcional)</label>
+            <input type="url" id="gitlabUrl" placeholder="https://gitlab.com" />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">🔗 Conectar GitLab</button>
+      </form>`;
+    document.getElementById("gitlabForm").addEventListener("submit", connectGitLab);
+    return;
+  }
+
+  const running = status.lastSyncStatus === "RUNNING";
+  card.innerHTML = `
+    <div class="list-row">
+      <div class="list-icon">🦊</div>
+      <div class="list-main">
+        <div class="list-title">@${escapeHtml(status.username)} <span class="badge green">Conectado</span></div>
+        <div class="list-sub">
+          ${escapeHtml(status.baseUrl)} · última sincronização: ${status.lastSyncedAt ? formatDateTime(status.lastSyncedAt) : "nunca"}
+          ${status.lastSyncActivities != null ? ` · ${status.lastSyncActivities} atividades` : ""}
+          ${status.lastSyncStatus === "FAILED" ? ` · <span style="color:var(--accent-red)">falhou: ${escapeHtml(status.lastSyncMessage || "")}</span>` : ""}
+        </div>
+      </div>
+      <button class="btn btn-primary" id="gitlabSyncBtn" ${running ? "disabled" : ""}>
+        ${running ? '<span class="spinner"></span> Sincronizando...' : "🔄 Sincronizar"}
+      </button>
+      <button class="btn btn-danger" id="gitlabDisconnectBtn">Desconectar</button>
+    </div>`;
+  document.getElementById("gitlabSyncBtn").addEventListener("click", syncGitLab);
+  document.getElementById("gitlabDisconnectBtn").addEventListener("click", disconnectGitLab);
+  if (running) pollGitLab();
+}
+
+async function connectGitLab(event) {
+  event.preventDefault();
+  try {
+    await Api.post("/gitlab/connect", {
+      token: document.getElementById("gitlabToken").value.trim(),
+      baseUrl: document.getElementById("gitlabUrl").value.trim() || null,
+    });
+    Toast.success("GitLab conectado.");
+    loadGitLab();
+  } catch (error) {
+    Toast.error(error.message);
+  }
+}
+
+async function syncGitLab() {
+  try {
+    await Api.post("/gitlab/sync");
+    Toast.info("Sincronização do GitLab iniciada.");
+    loadGitLab();
+  } catch (error) {
+    Toast.error(error.message);
+  }
+}
+
+function pollGitLab() {
+  clearTimeout(gitlabPoll);
+  gitlabPoll = setTimeout(async () => {
+    const status = await Api.get("/gitlab/status").catch(() => null);
+    if (!status) return;
+    if (status.lastSyncStatus === "SUCCESS") {
+      Toast.success(`GitLab sincronizado: ${status.lastSyncActivities} atividades importadas.`);
+    } else if (status.lastSyncStatus === "FAILED") {
+      Toast.error("Sync do GitLab falhou: " + (status.lastSyncMessage || ""));
+    }
+    renderGitLab(document.getElementById("gitlabCard"), status);
+  }, 3000);
+}
+
+async function disconnectGitLab() {
+  if (!confirm("Desconectar o GitLab? As atividades já importadas permanecem.")) return;
+  try {
+    await Api.del("/gitlab/disconnect");
+    Toast.success("GitLab desconectado.");
+    loadGitLab();
+  } catch (error) {
+    Toast.error(error.message);
+  }
+}
+
+loadGitLab();

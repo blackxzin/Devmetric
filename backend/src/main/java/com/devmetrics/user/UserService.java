@@ -47,6 +47,19 @@ public class UserService {
     public UserResponse update(Long userId, UpdateUserRequest request) {
         User user = requireUser(userId);
         user.updateProfile(request.displayName(), request.timezone(), request.weeklyGoalPoints());
+        if (request.username() != null) {
+            if (userRepository.existsByUsernameIgnoreCaseAndIdNot(request.username(), userId)) {
+                throw new BusinessException(ErrorCode.USERNAME_ALREADY_USED);
+            }
+            user.changeUsername(request.username());
+        }
+        if (request.publicProfile() != null) {
+            if (request.publicProfile() && user.getUsername() == null) {
+                throw new BusinessException(ErrorCode.VALIDATION_ERROR,
+                        "Defina um nome de usuario antes de publicar o perfil");
+            }
+            user.setPublicProfile(request.publicProfile());
+        }
         return UserResponse.from(user);
     }
 

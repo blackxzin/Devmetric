@@ -21,7 +21,10 @@ public record AppProperties(
         @Valid Jwt jwt,
         @Valid Security security,
         @Valid GitHub github,
-        @Valid Scoring scoring
+        GitLab gitlab,
+        @Valid Scoring scoring,
+        Demo demo,
+        Ai ai
 ) {
 
     public record Cors(List<String> allowedOrigins) {
@@ -50,7 +53,8 @@ public record AppProperties(
             int firstSyncDays,
             int maxReposPerSync,
             int maxCommitDetailsPerSync,
-            int minMinutesBetweenSyncs
+            int minMinutesBetweenSyncs,
+            String webhookSecret
     ) {
         public boolean isConfigured() {
             return clientId != null && !clientId.isBlank()
@@ -58,6 +62,21 @@ public record AppProperties(
         }
     }
 
+    public record GitLab(String defaultBaseUrl, int firstSyncDays, int maxProjectsPerSync,
+                         int maxCommitDetailsPerSync) {
+    }
+
     public record Scoring(int windowDays, double newTechnologyBonus) {
+    }
+
+    /** Conta demo com dados de exemplo, para quem quer ver o produto sem criar conta. */
+    public record Demo(boolean enabled, String email) {
+    }
+
+    /** Desafios reescritos pelo Claude. Sem chave, o texto das regras e usado como esta. */
+    public record Ai(String anthropicApiKey, String model) {
+        public boolean isConfigured() {
+            return anthropicApiKey != null && !anthropicApiKey.isBlank();
+        }
     }
 }

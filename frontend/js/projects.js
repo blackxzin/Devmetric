@@ -29,7 +29,7 @@ function renderProjects(projects) {
         <div class="tilt-layer">
           <div style="display:flex;justify-content:space-between;align-items:flex-start">
             <div class="project-name">${escapeHtml(project.name)}</div>
-            <span class="badge ${project.source === "GITHUB" ? "brand" : "muted"}">${project.source === "GITHUB" ? "GitHub" : "Manual"}</span>
+            <span class="badge ${project.source === "MANUAL" ? "muted" : "brand"}">${SOURCE_LABELS[project.source] || "Manual"}</span>
           </div>
           <div class="project-desc">${escapeHtml(project.description || "Sem descrição.")}</div>
           <div class="tech-pill-list">

@@ -187,14 +187,22 @@ public class ProjectService {
     @Transactional
     public Project upsertFromGitHub(User user, String externalId, String name, String description,
                                     String repoUrl, LocalDate createdAt) {
+        return upsertImported(user, com.devmetrics.project.domain.ProjectSource.GITHUB,
+                externalId, name, description, repoUrl, createdAt);
+    }
+
+    /** Mesmo upsert para qualquer origem importada (GitHub, GitLab). */
+    @Transactional
+    public Project upsertImported(User user, com.devmetrics.project.domain.ProjectSource source,
+                                  String externalId, String name, String description,
+                                  String repoUrl, LocalDate createdAt) {
         return projectRepository
-                .findByUserIdAndSourceAndExternalId(user.getId(),
-                        com.devmetrics.project.domain.ProjectSource.GITHUB, externalId)
+                .findByUserIdAndSourceAndExternalId(user.getId(), source, externalId)
                 .map(existing -> {
                     existing.refreshFromGitHub(description, repoUrl);
                     return existing;
                 })
                 .orElseGet(() -> projectRepository.save(
-                        Project.fromGitHub(user, name, description, externalId, repoUrl, createdAt)));
+                        Project.imported(user, source, name, description, externalId, repoUrl, createdAt)));
     }
 }

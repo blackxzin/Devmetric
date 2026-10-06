@@ -53,6 +53,29 @@
       </div>
 
       <div class="card" style="margin-top:18px">
+        <div class="card-header"><div class="card-title">🌐 Perfil público</div></div>
+        <p class="text-muted" style="font-size:13px;margin-bottom:14px">
+          Uma página <span class="mono">/u/seu-usuario</span> para o currículo e um card SVG para o README do GitHub.
+          Mostra só agregados (score, streak, calendário, tecnologias, conquistas). Nunca mostra e-mail.
+        </p>
+        <form id="publicForm">
+          <div class="form-grid-2">
+            <div class="field">
+              <label for="username">Nome de usuário</label>
+              <input type="text" id="username" minlength="3" maxlength="40" pattern="[a-zA-Z0-9-]+" placeholder="seu-usuario" />
+            </div>
+            <div class="field" style="display:flex;align-items:flex-end;gap:8px">
+              <label style="display:flex;gap:8px;align-items:center;cursor:pointer">
+                <input type="checkbox" id="publicProfile" /> Perfil público ativo
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+        <div id="publicLinks" style="margin-top:14px"></div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
         <div class="card-header"><div class="card-title">🔒 Trocar senha</div></div>
         <form id="passwordForm">
           <div class="form-grid-2">

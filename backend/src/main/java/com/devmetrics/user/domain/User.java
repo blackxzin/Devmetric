@@ -35,6 +35,12 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 20)
     private Role role;
 
+    @Column(length = 40)
+    private String username;
+
+    @Column(name = "public_profile", nullable = false)
+    private boolean publicProfile;
+
     protected User() {
     }
 
@@ -59,6 +65,14 @@ public class User extends BaseEntity {
         if (weeklyGoalPoints != null && weeklyGoalPoints > 0) {
             this.weeklyGoalPoints = weeklyGoalPoints;
         }
+    }
+
+    public void changeUsername(String username) {
+        this.username = username.toLowerCase().trim();
+    }
+
+    public void setPublicProfile(boolean publicProfile) {
+        this.publicProfile = publicProfile;
     }
 
     public void changePassword(String newPasswordHash) {
@@ -103,5 +117,13 @@ public class User extends BaseEntity {
 
     public Role getRole() {
         return role;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public boolean isPublicProfile() {
+        return publicProfile;
     }
 }

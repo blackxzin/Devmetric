@@ -115,7 +115,28 @@ Custo: buscar `files[]` é 1 request por commit. Otimização do MVP — só bus
 As atividades importadas **permanecem** — são o histórico do usuário. Os projetos
 `source=GITHUB` ficam somente leitura.
 
-## 7. Testes
+## 7. Webhook (tempo real)
+
+`POST /api/v1/github/webhook` recebe eventos `push`. Configuração no repositório (ou na organização):
+Settings → Webhooks → Payload URL `https://<host>/api/v1/github/webhook`, content type `application/json`,
+secret = `GITHUB_WEBHOOK_SECRET`, evento "Just the push event".
+
+- Assinatura `X-Hub-Signature-256` validada com HMAC-SHA256 e comparação em tempo constante.
+- O payload já traz mensagem e arquivos de cada commit: classificação idêntica à do sync, sem chamada extra.
+- Só entram commits cujo `author.username` é o login conectado; `sender.id` identifica a conta.
+- Chave externa `commit:<sha>` igual à do sync: webhook + sync nunca duplicam.
+
+## 8. GitLab
+
+Mesmo pipeline (classificador, detector de tecnologia, `ActivityService.record`), outra origem:
+
+- Autenticação por **Personal Access Token** (`read_api`), cifrado com o mesmo `TokenCipher`.
+  Funciona em gitlab.com e instâncias self-hosted sem registrar OAuth App em cada uma.
+- Importa projetos com atividade desde o último sync (padrão 90 dias), commits do usuário
+  (casados por e-mail/nome, porque commit no GitLab não traz id do autor), merge requests e issues criados.
+- Atividades e projetos ficam com `source=GITLAB` e são somente leitura, como os do GitHub.
+
+## 9. Testes
 
 - `ActivityClassifierTest`: tabela de casos, um por regra (é a classe com mais valor em teste unitário).
 - `GitHubApiClientTest` com `MockRestServiceServer` — nunca chamar a API real em teste.

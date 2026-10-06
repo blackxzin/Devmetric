@@ -21,13 +21,14 @@ Listas paginadas incluem `"meta": { "page":0, "size":20, "total":134, "totalPage
 | POST | `/auth/login` | devolve accessToken (15min) + refreshToken (7d) |
 | POST | `/auth/refresh` | rotaciona o refresh token |
 | POST | `/auth/logout` | revoga o refresh token |
+| POST | `/auth/demo` | entra na conta demo (só com `DEMO_ENABLED=true`; senão 404 `DEMO_DISABLED`) |
 
 ## Usuário
 
 | Método | Rota | Descrição |
 |---|---|---|
 | GET | `/users/me` | perfil + status da conexão GitHub |
-| PATCH | `/users/me` | displayName, timezone, weeklyGoalPoints |
+| PATCH | `/users/me` | displayName, timezone, weeklyGoalPoints, username, publicProfile |
 | PUT | `/users/me/password` | troca de senha |
 
 ## Projetos
@@ -116,6 +117,25 @@ Listas paginadas incluem `"meta": { "page":0, "size":20, "total":134, "totalPage
 | POST | `/github/sync` | dispara sync (202 Accepted + `syncId`) |
 | GET | `/github/sync/{syncId}` | status do sync |
 | DELETE | `/github/disconnect` | remove o token (mantém as atividades já importadas) |
+| POST | `/github/webhook` | evento `push` assinado (`X-Hub-Signature-256`); público, validado por HMAC |
+
+## GitLab
+
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | `/gitlab/connect` | body: `token` (PAT `read_api`), `baseUrl` opcional (self-hosted) |
+| GET | `/gitlab/status` | conectado?, username, último sync (status, mensagem, atividades) |
+| POST | `/gitlab/sync` | dispara sync em segundo plano (202) |
+| DELETE | `/gitlab/disconnect` | remove o token (mantém as atividades) |
+
+## Perfil público (sem autenticação)
+
+| Método | Rota | Descrição |
+|---|---|---|
+| GET | `/public/u/{username}` | score, streak, totais, tecnologias, conquistas, calendário dos últimos 365 dias |
+| GET | `/public/u/{username}/badge.svg` | card SVG para README (cache 1h) |
+
+Perfil privado e perfil inexistente respondem o mesmo 404 (`PROFILE_NOT_FOUND`): não revela quem tem conta.
 
 ## Conquistas
 
