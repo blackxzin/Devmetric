@@ -64,7 +64,7 @@ devmetrics:
     access-ttl-minutes: ${JWT_ACCESS_TTL_MINUTES:15}
     refresh-ttl-days: ${JWT_REFRESH_TTL_DAYS:7}
   security:
-    token-encryption-key: ${TOKEN_ENCRYPTION_KEY:devmetrics-chave-aes-local-32ch!}
+    token-encryption-key: ${TOKEN_ENCRYPTION_KEY:devmetrics-chave-aes-local-32ch!!}
   github:
     client-id: ${GITHUB_CLIENT_ID:}
     client-secret: ${GITHUB_CLIENT_SECRET:}

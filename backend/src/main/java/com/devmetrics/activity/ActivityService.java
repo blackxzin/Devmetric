@@ -159,19 +159,22 @@ public class ActivityService {
     @Transactional
     public ActivityResponse update(Long userId, Long activityId, UpdateActivityRequest request) {
         Activity activity = requireActivity(userId, activityId);
+        if (activity.isReadOnly()) {
+            throw new BusinessException(ErrorCode.READ_ONLY_RESOURCE,
+                    "Atividade importada do GitHub nao pode ser editada");
+        }
         User user = activity.getUser();
         LocalDate previousDate = activity.getActivityDate();
 
-        Instant occurredAt = activity.isReadOnly()
-                ? activity.getOccurredAt()
-                : validateMoment(request.occurredAt());
+        Instant occurredAt = validateMoment(request.occurredAt());
         LocalDate newDate = occurredAt.atZone(user.zoneId()).toLocalDate();
 
         activity.updateContent(request.type(), request.title(), request.description(), occurredAt, newDate);
         activity.attachProject(resolveProject(userId, request.projectId()));
-        if (request.technologyId() != null) {
-            Technology technology = technologyService.requireTechnology(request.technologyId());
-            activity.attachTechnology(technology);
+        Technology technology = request.technologyId() == null
+                ? null : technologyService.requireTechnology(request.technologyId());
+        activity.attachTechnology(technology);
+        if (technology != null) {
             technologyService.registerUsage(user, technology, occurredAt);
         }
 

@@ -7,7 +7,7 @@
  */
 
 const Api = (() => {
-  const BASE_URL = window.DEVMETRICS_API_URL || "http://localhost:8080/api/v1";
+  const BASE_URL = window.DEVMETRICS_API_URL || "/api/v1";
   const STORAGE_KEY = "devmetrics.auth";
 
   let refreshPromise = null;
@@ -64,7 +64,7 @@ const Api = (() => {
     }
 
     if (response.status === 204) {
-      return null;
+      return { data: null, meta: null };
     }
 
     let body = null;
