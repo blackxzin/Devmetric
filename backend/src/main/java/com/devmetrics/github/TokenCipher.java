@@ -31,6 +31,9 @@ public class TokenCipher {
 
     public TokenCipher(AppProperties properties) {
         byte[] keyBytes = properties.security().tokenEncryptionKey().getBytes(StandardCharsets.UTF_8);
+        if (keyBytes.length != 32) {
+            throw new IllegalArgumentException("TOKEN_ENCRYPTION_KEY precisa ter exatamente 32 bytes UTF-8");
+        }
         this.key = new SecretKeySpec(keyBytes, "AES");
     }
 
