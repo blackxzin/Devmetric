@@ -48,7 +48,7 @@ class AuthServiceTest {
                 "http://localhost:3000",
                 new com.devmetrics.config.AppProperties.Jwt(
                         "chave-de-teste-com-mais-de-32-caracteres-ok", 15, 7),
-                new com.devmetrics.config.AppProperties.Security("devmetrics-chave-aes-local-32ch!!"),
+                new com.devmetrics.config.AppProperties.Security("0123456789abcdef0123456789abcdef"),
                 new com.devmetrics.config.AppProperties.GitHub("", "", "", "https://api.github.com",
                         "https://github.com", 90, 60, 200, 10),
                 new com.devmetrics.config.AppProperties.Scoring(90, 0.5)));

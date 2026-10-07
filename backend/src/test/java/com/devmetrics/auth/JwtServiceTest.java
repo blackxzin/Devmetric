@@ -20,7 +20,7 @@ class JwtServiceTest {
                 new AppProperties.Cors(List.of("http://localhost:3000")),
                 "http://localhost:3000",
                 new AppProperties.Jwt(secret, accessTtlMinutes, 7),
-                new AppProperties.Security("devmetrics-chave-aes-local-32ch!!"),
+                new AppProperties.Security("0123456789abcdef0123456789abcdef"),
                 new AppProperties.GitHub("", "", "", "https://api.github.com",
                         "https://github.com", 90, 60, 200, 10),
                 new AppProperties.Scoring(90, 0.5));

@@ -26,3 +26,17 @@ jobs:
           node-version: '22'
       - run: node --test frontend/tests/*.test.cjs
       - run: for file in frontend/js/*.js; do node --check "$file" || exit; done
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and start containers
+        run: docker compose up -d --build --wait --wait-timeout 180
+      - name: Smoke test through nginx
+        run: python3 scripts/smoke-test.py
+      - name: Container logs
+        if: failure()
+        run: docker compose logs --no-color
+      - name: Stop containers
+        if: always()
+        run: docker compose down -v
