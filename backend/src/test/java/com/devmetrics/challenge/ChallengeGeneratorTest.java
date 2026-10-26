@@ -101,4 +101,14 @@ class ChallengeGeneratorTest {
         assertThat(rendered).isEqualTo("Ha 365 dias sem atividade.");
         assertThat(rendered).doesNotContain("2147483647");
     }
+
+    @Test
+    @DisplayName("desafio de inatividade fica obsoleto depois que o usuario passa a ter atividade")
+    void inactivityChallengeIsStaleOnceUserIsActive() {
+        ChallengeGenerator.Context nowActive = new ChallengeGenerator.Context(0, 5, true, 0, 0, 1.2, 2);
+        ChallengeTrigger wanted = generator.selectTrigger(nowActive);
+
+        assertThat(generator.isStale(ChallengeTrigger.INACTIVE_DAYS, wanted)).isTrue();
+        assertThat(generator.isStale(wanted, wanted)).isFalse();
+    }
 }

@@ -62,9 +62,33 @@ public class ChallengeService {
     @Transactional
     public ChallengeResponse today(User user) {
         LocalDate today = LocalDate.now(user.zoneId());
-        return dailyChallengeRepository.findByUserAndDate(user.getId(), today)
-                .map(ChallengeResponse::from)
-                .orElseGet(() -> ChallengeResponse.from(generateFor(user, today, null)));
+        DailyChallenge existing = dailyChallengeRepository.findByUserAndDate(user.getId(), today).orElse(null);
+        if (existing == null) {
+            return ChallengeResponse.from(generateFor(user, today, null));
+        }
+        refreshIfStale(user, today, existing);
+        return ChallengeResponse.from(existing);
+    }
+
+    /**
+     * O desafio e gerado uma vez por dia, na primeira visita. Se o usuario importa atividades
+     * do GitHub depois disso, o texto original ("X dias sem atividade") fica errado; um desafio
+     * ainda pendente e refeito quando o gatilho calculado agora e outro e ha template para ele.
+     */
+    private void refreshIfStale(User user, LocalDate today, DailyChallenge challenge) {
+        if (challenge.getStatus() != ChallengeStatus.PENDING) {
+            return;
+        }
+        ChallengeGenerator.Context context = buildContext(user, today);
+        ChallengeTrigger wanted = generator.selectTrigger(context);
+        if (!generator.isStale(challenge.getTemplate().getTrigger(), wanted)
+                || templateRepository.findByTriggerAndActiveTrue(wanted).isEmpty()) {
+            return;
+        }
+        ChallengeTemplate replacement = pickTemplate(wanted, null);
+        String text = generator.render(replacement.getDescriptionTemplate(),
+                lastProjectName(user), context.daysSinceLastActivity());
+        challenge.skip(replacement, text);
     }
 
     @Transactional

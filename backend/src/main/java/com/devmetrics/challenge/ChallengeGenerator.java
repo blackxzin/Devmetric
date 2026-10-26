@@ -49,6 +49,11 @@ public class ChallengeGenerator {
     ) {
     }
 
+    /** O desafio pendente foi gerado para um gatilho que nao vale mais (ex.: antes de importar atividades). */
+    public boolean isStale(ChallengeTrigger currentTrigger, ChallengeTrigger wantedTrigger) {
+        return currentTrigger != wantedTrigger;
+    }
+
     public ChallengeTrigger selectTrigger(Context context) {
         if (context.daysSinceLastActivity() >= INACTIVE_DAYS_THRESHOLD) {
             return ChallengeTrigger.INACTIVE_DAYS;

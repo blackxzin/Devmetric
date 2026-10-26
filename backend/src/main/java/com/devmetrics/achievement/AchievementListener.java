@@ -27,7 +27,9 @@ public class AchievementListener {
         this.achievementService = achievementService;
     }
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    // fallbackExecution: o sync do GitHub publica o evento fora de transacao; sem isso as
+    // conquistas nunca eram avaliadas depois de importar atividades.
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void onActivityRecorded(ActivityRecordedEvent event) {
         try {
