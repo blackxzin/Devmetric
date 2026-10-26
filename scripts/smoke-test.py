@@ -1,9 +1,10 @@
 """Verify registration and activity CRUD through the frontend proxy."""
 import json
+import os
 import urllib.request
 import uuid
 
-BASE = "http://localhost:3000"
+BASE = os.environ.get("BASE_URL", "http://localhost:3000")
 
 def request(path, method="GET", data=None, token=None):
     headers = {"Content-Type": "application/json"}

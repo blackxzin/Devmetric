@@ -47,6 +47,10 @@ docker compose up -d --build
 # Frontend   http://localhost:3000
 ```
 
+Se 3000, 8080 ou 5433 já estiverem em uso, mude `WEB_PORT`, `API_PORT` e `DB_PORT` no `.env`
+(e ajuste `FRONTEND_URL`, `CORS_ORIGINS` e `GITHUB_REDIRECT_URI`). O smoke test aceita
+`BASE_URL=http://localhost:<WEB_PORT> python3 scripts/smoke-test.py`.
+
 O frontend encaminha `/api/` para o backend pelo nginx. Assim, o navegador usa o
 mesmo endereço do site, inclusive ao acessar por outro computador. Para servir o
 frontend fora do Compose, configure um proxy equivalente ou defina
