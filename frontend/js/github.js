@@ -6,7 +6,7 @@ requireAuth();
 let pollTimer = null;
 
 async function loadStatus() {
-  const card = document.getElementById("statusCard").querySelector(".tilt-layer");
+  const card = document.getElementById("statusCard").querySelector(".github-card");
   try {
     const status = await Api.get("/github/status");
     renderStatus(card, status);
@@ -37,7 +37,7 @@ function renderStatus(card, status) {
           O acesso é somente leitura e pode ser revogado quando quiser.
         </p>
       </div>
-      <button class="btn btn-primary" id="connectBtn">🔗 Conectar GitHub</button>
+      <button class="btn btn-primary" id="connectBtn">Conectar GitHub</button>
     `;
     document.getElementById("connectBtn").addEventListener("click", connectGitHub);
     return;
@@ -47,7 +47,7 @@ function renderStatus(card, status) {
     <div>
       <div class="github-status-line">
         <div class="avatar" style="width:26px;height:26px">
-          ${status.avatarUrl ? `<img src="${escapeHtml(status.avatarUrl)}" alt="">` : "🐙"}
+          ${status.avatarUrl ? `<img src="${escapeHtml(status.avatarUrl)}" alt="">` : "GH"}
         </div>
         <strong>@${escapeHtml(status.login)}</strong>
         <span class="badge green">Conectado</span>
@@ -58,7 +58,7 @@ function renderStatus(card, status) {
       </p>
     </div>
     <div style="display:flex;gap:10px">
-      <button class="btn btn-primary" id="syncBtn">🔄 Sincronizar agora</button>
+      <button class="btn btn-primary" id="syncBtn">Sincronizar agora</button>
       <button class="btn btn-danger" id="disconnectBtn">Desconectar</button>
     </div>
   `;
@@ -100,7 +100,7 @@ async function triggerSync() {
   } catch (error) {
     Toast.error(error.message);
     btn.disabled = false;
-    btn.textContent = "🔄 Sincronizar agora";
+    btn.textContent = "Sincronizar agora";
   }
 }
 
@@ -114,7 +114,7 @@ function pollSync(syncId) {
         const btn = document.getElementById("syncBtn");
         if (btn) {
           btn.disabled = false;
-          btn.textContent = "🔄 Sincronizar agora";
+          btn.textContent = "Sincronizar agora";
         }
         if (sync.status === "SUCCESS" || sync.status === "PARTIAL") {
           Toast.success(`Sincronização concluída: ${sync.activitiesCreated} atividades importadas.`);
@@ -142,7 +142,7 @@ async function loadSyncHistory() {
       .map(
         (sync) => `
         <div class="list-row">
-          <div class="list-icon">🐙</div>
+          <div class="list-icon">GH</div>
           <div class="list-main">
             <div class="list-title">${sync.reposScanned} repositórios · ${sync.activitiesCreated} atividades</div>
             <div class="list-sub">${formatDateTime(sync.startedAt)}</div>
@@ -158,7 +158,7 @@ async function loadSyncHistory() {
 
 const params = new URLSearchParams(location.search);
 if (params.get("github") === "connected") {
-  Toast.success("GitHub conectado com sucesso! 🎉");
+  Toast.success("GitHub conectado com sucesso!");
 }
 
 loadStatus();

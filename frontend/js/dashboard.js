@@ -5,9 +5,9 @@
 requireAuth();
 
 const TYPE_ICON = {
-  COMMIT: "🔵", PULL_REQUEST: "🔀", ISSUE: "🗒️", FEATURE: "✨", BUG_FIX: "🐛",
-  TEST: "🧪", DOCUMENTATION: "📘", STUDY: "📚", NEW_PROJECT: "🚀",
-  REFACTOR: "🛠️", CODE_REVIEW: "👀", DEPLOY: "🐳",
+  COMMIT: "CM", PULL_REQUEST: "PR", ISSUE: "IS", FEATURE: "FT", BUG_FIX: "BG",
+  TEST: "TS", DOCUMENTATION: "DC", STUDY: "ST", NEW_PROJECT: "NP",
+  REFACTOR: "RF", CODE_REVIEW: "CR", DEPLOY: "DP",
 };
 
 let calendarYear = new Date().getFullYear();
@@ -66,27 +66,20 @@ function renderScore(score) {
   breakdown.innerHTML = score.breakdown
     .map(
       (component, index) => `
-      <div class="breakdown-row" data-index="${index}">
-        <div class="breakdown-label">${component.label}</div>
-        <div class="progress-track"><div class="progress-fill thin" style="width:${component.normalized * 100}%"></div></div>
-        <div class="breakdown-points">${component.points}</div>
-        <div class="breakdown-tooltip">${escapeHtml(component.explanation)}</div>
+      <div class="breakdown-row" data-index="${index}" tabindex="0">
+        <div class="breakdown-label">${escapeHtml(component.label)}</div>
+        <div class="breakdown-points">${component.points}<span class="breakdown-max">/${component.maxPoints}</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:${Math.round(component.normalized * 100)}%"></div></div>
+        <div class="breakdown-tooltip" role="tooltip">${escapeHtml(component.explanation)}</div>
       </div>`
     )
     .join("");
-
-  breakdown.querySelectorAll(".breakdown-row").forEach((row) => {
-    row.addEventListener("click", () => row.classList.toggle("expanded"));
-  });
 }
 
 function renderStreak(streak) {
   animateCount(document.getElementById("streakCurrent"), streak.current);
   document.getElementById("streakLongest").textContent = streak.longest;
   document.getElementById("streakActive30").textContent = streak.activeDaysLast30;
-  const flame = document.getElementById("streakFlame");
-  flame.style.opacity = streak.current > 0 ? "1" : "0.25";
-  flame.style.filter = streak.current > 0 ? "" : "grayscale(1)";
 }
 
 function renderWeek(week) {
@@ -109,7 +102,7 @@ function renderTechnologies(technologies) {
       (tech) => `
       <span class="tech-pill ${tech.isNew ? "is-new" : ""}">
         <span class="dot"></span>${escapeHtml(tech.name)}
-        ${tech.isNew ? " 🌱" : ""}
+        ${tech.isNew ? "" : ""}
       </span>`
     )
     .join("");
@@ -123,14 +116,14 @@ function renderTotals(totals) {
 function renderRecentActivities(activities) {
   const container = document.getElementById("recentActivities");
   if (!activities.length) {
-    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🌱</div>Nenhuma atividade ainda. Que tal registrar a primeira?</div>`;
+    container.innerHTML = `<div class="empty-state">Nenhuma atividade ainda. Que tal registrar a primeira?</div>`;
     return;
   }
   container.innerHTML = activities
     .map(
       (activity) => `
       <div class="list-row">
-        <div class="list-icon">${TYPE_ICON[activity.type] || "•"}</div>
+        <div class="list-icon">${TYPE_ICON[activity.type] || "··"}</div>
         <div class="list-main">
           <div class="list-title">${escapeHtml(activity.title)}</div>
           <div class="list-sub">${activity.typeLabel} · ${formatDateTime(activity.occurredAt)}${activity.projectName ? " · " + escapeHtml(activity.projectName) : ""}</div>
@@ -158,7 +151,7 @@ async function loadScoreHistory() {
   try {
     const history = await Api.get("/score/history");
     const canvas = document.getElementById("scoreChart");
-    drawLineChart(canvas, history.map((point) => point.devScore), { color: "#7c5cff" });
+    drawLineChart(canvas, history.map((point) => point.devScore), { color: "#4f8cff" });
   } catch {
     // grafico e cosmetico: falha aqui nao deve travar o resto do dashboard
   }
@@ -211,7 +204,7 @@ function renderChallenge(challenge) {
     try {
       const updated = await Api.post(`/challenges/${challenge.id}/complete`);
       renderChallenge(updated);
-      Toast.success("Desafio concluído! 🎉");
+      Toast.success("Desafio concluído");
       loadSummary();
     } catch (error) {
       Toast.error(error.message);
@@ -236,7 +229,7 @@ async function loadNextStep() {
     const suggestion = nextStep.suggestion;
     body.innerHTML = `
       <div class="next-step-tech">
-        <div class="tech-badge-icon">🧭</div>
+        
         <div>
           <div style="font-weight:700;font-size:15px">${escapeHtml(suggestion.technology)}</div>
           <span class="badge muted">${suggestion.category}</span>

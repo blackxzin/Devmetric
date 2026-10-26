@@ -57,10 +57,9 @@
   font-size: 14.5px;
 }
 
-/* Mockup 3D do dashboard flutuando */
+/* Mockup do dashboard */
 .hero-mockup-scene {
   margin-top: 60px;
-  perspective: 1600px;
   animation: fade-up var(--dur-slow) var(--ease-out);
   animation-delay: 240ms;
 }
@@ -70,16 +69,9 @@
   margin: 0 auto;
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-strong);
-  background: linear-gradient(160deg, var(--bg-2), var(--bg-1));
+  background: var(--bg-1);
   box-shadow: var(--shadow-2);
   padding: 20px;
-  transform: rotateX(8deg);
-  transform-style: preserve-3d;
-  transition: transform 400ms var(--ease-out);
-}
-
-.hero-mockup-scene:hover .hero-mockup {
-  transform: rotateX(2deg) translateY(-6px);
 }
 
 .hero-mockup-bar {
@@ -157,17 +149,6 @@
   overflow: hidden;
 }
 
-.feature-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  font-size: 20px;
-  margin-bottom: 16px;
-  background: var(--grad-brand);
-  box-shadow: 0 10px 24px -8px rgba(124, 92, 255, 0.5);
-}
 
 .feature-card h3 {
   font-size: 16px;
@@ -193,7 +174,7 @@
   padding: 20px;
   border-radius: var(--radius-md);
   border: 1px dashed var(--border-strong);
-  background: rgba(124, 92, 255, 0.05);
+  background: rgba(79, 140, 255, 0.05);
   margin-top: 30px;
 }
 
@@ -219,8 +200,8 @@
   margin: 0 auto;
   padding: 50px 40px;
   border-radius: var(--radius-xl);
-  background: linear-gradient(160deg, rgba(124, 92, 255, 0.16), rgba(51, 214, 255, 0.06));
-  border: 1px solid rgba(124, 92, 255, 0.3);
+  background: var(--surface);
+  border: 1px solid rgba(79, 140, 255, 0.3);
 }
 
 .cta-box h2 {

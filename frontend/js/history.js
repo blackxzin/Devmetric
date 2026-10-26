@@ -15,7 +15,7 @@ async function loadHistory(year) {
     drawLineChart(
       document.getElementById("historyChart"),
       history.months.map((m) => m.devScore),
-      { color: "#33d6ff" }
+      { color: "#7aa7ff" }
     );
     renderHistoryTable(history);
   } catch (error) {

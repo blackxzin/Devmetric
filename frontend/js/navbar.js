@@ -34,7 +34,6 @@
   mount.innerHTML = `
     <div class="container navbar">
       <a href="dashboard.html" class="brand">
-        <span class="brand-mark floating-icon">D</span>
         DevMetrics
       </a>
       <nav>${navLinks}</nav>

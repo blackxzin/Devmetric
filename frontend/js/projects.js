@@ -19,14 +19,14 @@ async function loadProjects() {
 function renderProjects(projects) {
   const grid = document.getElementById("projectGrid");
   if (!projects.length) {
-    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📦</div>Nenhum projeto ainda. Crie o primeiro!</div>`;
+    grid.innerHTML = `<div class="empty-state">Nenhum projeto ainda. Crie o primeiro!</div>`;
     return;
   }
   grid.innerHTML = projects
     .map(
       (project) => `
-      <div class="card tilt-card project-card" data-tilt-max="4">
-        <div class="tilt-layer">
+      <div class="card project-card">
+        <div>
           <div style="display:flex;justify-content:space-between;align-items:flex-start">
             <div class="project-name">${escapeHtml(project.name)}</div>
             <span class="badge ${project.source === "GITHUB" ? "brand" : "muted"}">${project.source === "GITHUB" ? "GitHub" : "Manual"}</span>
@@ -42,7 +42,7 @@ function renderProjects(projects) {
                 project.readOnly
                   ? ""
                   : `<button class="btn btn-ghost" style="padding:5px 9px" data-archive="${project.id}" data-archived="${project.archived}">
-                       ${project.archived ? "↩" : "🗄"}
+                       ${project.archived ? "Restaurar" : "Arquivar"}
                      </button>`
               }
               ${project.repoUrl ? `<a class="btn btn-ghost" style="padding:5px 9px" href="${escapeHtml(project.repoUrl)}" target="_blank" rel="noopener">↗</a>` : ""}
@@ -56,8 +56,6 @@ function renderProjects(projects) {
   grid.querySelectorAll("[data-archive]").forEach((btn) => {
     btn.addEventListener("click", () => toggleArchive(Number(btn.dataset.archive), btn.dataset.archived === "true"));
   });
-
-  initTiltCards(grid);
 }
 
 async function toggleArchive(id, isArchived) {

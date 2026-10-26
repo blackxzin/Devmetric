@@ -15,38 +15,31 @@
   <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 <body>
-  <div class="scene-bg"></div>
   <div id="navbar" data-active="dashboard"></div>
 
   <main class="page container">
     <div class="page-head reveal">
       <div>
-        <h1>Olá, <span id="userFirstName">dev</span> 👋</h1>
+        <h1>Olá, <span id="userFirstName">dev</span></h1>
         <div class="page-sub">Aqui está sua evolução recente.</div>
       </div>
       <div class="page-actions">
-        <button class="btn" id="recalcBtn">🔄 Recalcular pontos</button>
+        <button class="btn" id="recalcBtn">Recalcular pontos</button>
         <a href="activities.html" class="btn btn-primary">+ Nova atividade</a>
       </div>
     </div>
 
-    <div class="dash-grid tilt-scene">
+    <div class="dash-grid">
       <!-- Coluna esquerda -->
       <div class="dash-col reveal-stagger">
-        <div class="card tilt-card" data-tilt-max="4">
+        <div class="card">
           <div class="card-header">
-            <div class="card-title">🧠 Dev Score</div>
+            <div class="card-title">Dev Score</div>
             <span class="badge brand" id="scoreLevelBadge">—</span>
           </div>
-          <div class="score-card-body tilt-layer">
+          <div class="score-card-body">
             <div class="score-ring-wrap">
               <svg viewBox="0 0 176 176">
-                <defs>
-                  <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#7c5cff" />
-                    <stop offset="100%" stop-color="#33d6ff" />
-                  </linearGradient>
-                </defs>
                 <circle class="score-ring-bg" cx="88" cy="88" r="70"></circle>
                 <circle class="score-ring-fill" id="scoreRingFill" cx="88" cy="88" r="70"
                   stroke-dasharray="0 440"></circle>
@@ -62,12 +55,11 @@
           <div id="scoreBreakdown" style="margin-top:18px"></div>
         </div>
 
-        <div class="card tilt-card" data-tilt-max="5">
+        <div class="card">
           <div class="card-header">
-            <div class="card-title">🔥 Sequência</div>
+            <div class="card-title">Sequência</div>
           </div>
-          <div class="streak-body tilt-layer">
-            <div class="streak-flame-big flame" id="streakFlame">🔥</div>
+          <div class="streak-body">
             <div class="streak-numbers">
               <strong id="streakCurrent">0</strong>
               <div class="streak-label">dias consecutivos</div>
@@ -82,9 +74,9 @@
 
       <!-- Coluna central -->
       <div class="dash-col reveal-stagger">
-        <div class="card tilt-card" data-tilt-max="3">
+        <div class="card">
           <div class="card-header">
-            <div class="card-title">📅 Calendário de atividade</div>
+            <div class="card-title">Calendário de atividade</div>
             <div class="calendar-year-switch">
               <button id="yearPrev">←</button>
               <span class="mono" id="yearLabel" style="font-size:13px">2026</span>
@@ -104,26 +96,26 @@
           </div>
         </div>
 
-        <div class="card tilt-card" data-tilt-max="4">
+        <div class="card">
           <div class="card-header">
-            <div class="card-title">🎯 Desafio de hoje</div>
+            <div class="card-title">Desafio de hoje</div>
             <span class="badge" id="challengeStatusBadge">Pendente</span>
           </div>
-          <div id="challengeBody" class="tilt-layer">
+          <div id="challengeBody">
             <div class="skeleton" style="height:60px"></div>
           </div>
         </div>
 
-        <div class="card tilt-card" data-tilt-max="3">
+        <div class="card">
           <div class="card-header">
-            <div class="card-title">📈 Evolução do score (90 dias)</div>
+            <div class="card-title">Evolução do score (90 dias)</div>
           </div>
           <div class="chart-canvas-wrap"><canvas id="scoreChart"></canvas></div>
         </div>
 
-        <div class="card tilt-card" data-tilt-max="3">
+        <div class="card">
           <div class="card-header">
-            <div class="card-title">🕘 Atividade recente</div>
+            <div class="card-title">Atividade recente</div>
             <a href="activities.html" class="text-muted" style="font-size:12.5px">ver tudo →</a>
           </div>
           <div id="recentActivities"></div>
@@ -132,27 +124,25 @@
 
       <!-- Coluna direita -->
       <div class="dash-col reveal-stagger">
-        <div class="card tilt-card next-step-card" data-tilt-max="5">
+        <div class="card next-step-card">
           <div class="card-header">
-            <div class="card-title">🧭 Próximo Passo</div>
+            <div class="card-title">Próximo Passo</div>
           </div>
-          <div id="nextStepBody" class="tilt-layer">
+          <div id="nextStepBody">
             <div class="skeleton" style="height:80px"></div>
           </div>
         </div>
 
-        <div class="card tilt-card" data-tilt-max="4">
+        <div class="card">
           <div class="card-header">
-            <div class="card-title">📊 Semana atual</div>
+            <div class="card-title">Semana atual</div>
           </div>
-          <div class="stat-grid tilt-layer" style="grid-template-columns:1fr 1fr">
+          <div class="stat-grid" style="grid-template-columns:1fr 1fr">
             <div class="stat-tile">
-              <div class="stat-icon">⚡</div>
               <div class="stat-value" id="weekActivities">0</div>
               <div class="stat-label">Atividades</div>
             </div>
             <div class="stat-tile">
-              <div class="stat-icon">✨</div>
               <div class="stat-value" id="weekPoints">0</div>
               <div class="stat-label">Pontos</div>
             </div>
@@ -166,18 +156,18 @@
           </div>
         </div>
 
-        <div class="card tilt-card" data-tilt-max="4">
+        <div class="card">
           <div class="card-header">
-            <div class="card-title">🧩 Tecnologias em uso</div>
+            <div class="card-title">Tecnologias em uso</div>
           </div>
-          <div class="tech-pill-list tilt-layer" id="techPillList"></div>
+          <div class="tech-pill-list" id="techPillList"></div>
         </div>
 
-        <div class="card tilt-card" data-tilt-max="4">
+        <div class="card">
           <div class="card-header">
-            <div class="card-title">📦 Resumo</div>
+            <div class="card-title">Resumo</div>
           </div>
-          <div class="stat-grid tilt-layer" style="grid-template-columns:1fr 1fr">
+          <div class="stat-grid" style="grid-template-columns:1fr 1fr">
             <div class="stat-tile">
               <div class="stat-value" id="totalProjects">0</div>
               <div class="stat-label">Projetos ativos</div>
@@ -194,7 +184,6 @@
 
   <script src="js/api.js"></script>
   <script src="js/ui.js"></script>
-  <script src="js/scene3d.js"></script>
   <script src="js/navbar.js"></script>
   <script src="js/calendar.js"></script>
   <script src="js/chart.js"></script>

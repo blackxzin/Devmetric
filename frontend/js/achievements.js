@@ -26,9 +26,8 @@ function renderAchievements(achievements) {
   grid.innerHTML = sorted
     .map(
       (achievement) => `
-      <div class="achievement-card tilt-card ${achievement.unlocked ? "unlocked" : "locked"}" data-tilt-max="8">
-        <div class="tilt-layer">
-          <div class="achievement-icon">${achievement.icon || "🏅"}</div>
+      <div class="achievement-card ${achievement.unlocked ? "unlocked" : "locked"}">
+        <div class="ach-body">
           <div class="achievement-name">${escapeHtml(achievement.name)}</div>
           <div class="achievement-desc">${escapeHtml(achievement.description)}</div>
           ${
@@ -43,8 +42,6 @@ function renderAchievements(achievements) {
       </div>`
     )
     .join("");
-
-  initTiltCards(grid);
 }
 
 loadAchievements();

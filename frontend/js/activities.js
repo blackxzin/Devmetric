@@ -4,9 +4,9 @@
 requireAuth();
 
 const TYPE_ICON_MAP = {
-  COMMIT: "🔵", PULL_REQUEST: "🔀", ISSUE: "🗒️", FEATURE: "✨", BUG_FIX: "🐛",
-  TEST: "🧪", DOCUMENTATION: "📘", STUDY: "📚", NEW_PROJECT: "🚀",
-  REFACTOR: "🛠️", CODE_REVIEW: "👀", DEPLOY: "🐳",
+  COMMIT: "CM", PULL_REQUEST: "PR", ISSUE: "IS", FEATURE: "FT", BUG_FIX: "BG",
+  TEST: "TS", DOCUMENTATION: "DC", STUDY: "ST", NEW_PROJECT: "NP",
+  REFACTOR: "RF", CODE_REVIEW: "CR", DEPLOY: "DP",
 };
 
 let currentPage = 0;
@@ -84,14 +84,14 @@ async function loadActivities(page = 0) {
 function renderActivityList(activities) {
   const list = document.getElementById("activityList");
   if (!activities.length) {
-    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🌱</div>Nenhuma atividade encontrada com esse filtro.</div>`;
+    list.innerHTML = `<div class="empty-state">Nenhuma atividade encontrada com esse filtro.</div>`;
     return;
   }
   list.innerHTML = activities
     .map(
       (activity) => `
       <div class="list-row">
-        <div class="list-icon">${TYPE_ICON_MAP[activity.type] || "•"}</div>
+        <div class="list-icon">${TYPE_ICON_MAP[activity.type] || "··"}</div>
         <div class="list-main">
           <div class="list-title">${escapeHtml(activity.title)}</div>
           <div class="list-sub">
@@ -105,8 +105,8 @@ function renderActivityList(activities) {
           activity.readOnly
             ? ""
             : `<div style="display:flex;gap:4px">
-                 <button class="btn btn-ghost" style="padding:6px 10px" data-edit="${activity.id}">✏️</button>
-                 <button class="btn btn-ghost" style="padding:6px 10px" data-delete="${activity.id}">🗑️</button>
+                 <button class="btn btn-ghost" style="padding:6px 10px" data-edit="${activity.id}">Editar</button>
+                 <button class="btn btn-ghost" style="padding:6px 10px" data-delete="${activity.id}">Excluir</button>
                </div>`
         }
       </div>`
@@ -196,7 +196,7 @@ document.getElementById("activityForm").addEventListener("submit", async (event)
       Toast.success("Atividade atualizada.");
     } else {
       await Api.post("/activities", payload);
-      Toast.success("Atividade registrada! 🎉");
+      Toast.success("Atividade registrada");
     }
     Modal.close("activityModal");
     loadActivities(currentPage);

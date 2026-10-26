@@ -1,6 +1,6 @@
 /**
  * DevMetrics — utilidades de interface compartilhadas entre paginas:
- * tilt 3D em cartoes, reveal-on-scroll, toasts e um helper simples de modal.
+ * reveal-on-scroll, toasts e um helper simples de modal.
  */
 
 const Toast = (() => {
@@ -19,7 +19,7 @@ const Toast = (() => {
     const container = ensureStack();
     const el = document.createElement("div");
     el.className = `toast ${type}`;
-    const icon = { success: "✅", error: "⚠️", info: "ℹ️" }[type] || "ℹ️";
+    const icon = { success: "✓", error: "!", info: "i" }[type] || "i";
     el.innerHTML = `<span>${icon}</span><span>${escapeHtml(message)}</span>`;
     container.appendChild(el);
 
@@ -42,40 +42,6 @@ function escapeHtml(value) {
   const div = document.createElement("div");
   div.textContent = value == null ? "" : String(value);
   return div.innerHTML;
-}
-
-/** Ativa o tilt 3D (rotação sutil seguindo o mouse) em todo .tilt-card da página. */
-function initTiltCards(root = document) {
-  const cards = root.querySelectorAll(".tilt-card");
-  cards.forEach((card) => {
-    if (card.dataset.tiltBound) return;
-    card.dataset.tiltBound = "true";
-
-    if (!card.querySelector(".tilt-glare")) {
-      const glare = document.createElement("div");
-      glare.className = "tilt-glare";
-      card.appendChild(glare);
-    }
-
-    const maxTilt = Number(card.dataset.tiltMax || 6);
-
-    card.addEventListener("mousemove", (event) => {
-      const rect = card.getBoundingClientRect();
-      const px = (event.clientX - rect.left) / rect.width;
-      const py = (event.clientY - rect.top) / rect.height;
-      const rotateY = (px - 0.5) * maxTilt * 2;
-      const rotateX = (0.5 - py) * maxTilt * 2;
-      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
-      card.style.setProperty("--glare-x", `${px * 100}%`);
-      card.style.setProperty("--glare-y", `${py * 100}%`);
-      card.dataset.tiltActive = "true";
-    });
-
-    card.addEventListener("mouseleave", () => {
-      card.style.transform = "rotateX(0deg) rotateY(0deg)";
-      card.dataset.tiltActive = "false";
-    });
-  });
 }
 
 /** Anima elementos .reveal / .reveal-stagger quando entram na viewport. */
@@ -148,7 +114,6 @@ document.addEventListener("click", (event) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  initTiltCards();
   initRevealOnScroll();
 });
 

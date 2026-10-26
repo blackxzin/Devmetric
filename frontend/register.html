@@ -17,7 +17,6 @@
   <div class="auth-page">
     <aside class="auth-side">
       <div class="brand">
-        <span class="brand-mark">D</span>
         DevMetrics
       </div>
 
@@ -32,17 +31,6 @@
       </div>
 
       <div class="mini-note">Seus dados de GitHub são só leitura e podem ser revogados quando quiser.</div>
-
-      <div class="auth-cube-scene">
-        <div class="auth-cube">
-          <div class="face front"></div>
-          <div class="face back"></div>
-          <div class="face right"></div>
-          <div class="face left"></div>
-          <div class="face top"></div>
-          <div class="face bottom"></div>
-        </div>
-      </div>
     </aside>
 
     <section class="auth-form-side">
@@ -51,7 +39,7 @@
         <p class="auth-sub">É rápido — e você pode importar o GitHub em seguida.</p>
 
         <div class="auth-error-banner" id="errorBanner">
-          <span>⚠️</span><span id="errorText"></span>
+          <span aria-hidden="true">!</span><span id="errorText"></span>
         </div>
 
         <form id="registerForm" novalidate>
@@ -112,7 +100,7 @@
 
     passwordInput.addEventListener("input", () => {
       const score = passwordScore(passwordInput.value);
-      const colors = ["#ff5c72", "#ffcb52", "#33d6ff", "#37e29a"];
+      const colors = ["#e5646e", "#e0a04a", "#7aa7ff", "#3fb68b"];
       strengthBars.forEach((bar, index) => {
         bar.style.background = index < score ? colors[score - 1] : "rgba(255,255,255,0.08)";
       });

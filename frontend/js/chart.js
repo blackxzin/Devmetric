@@ -15,7 +15,7 @@ function drawLineChart(canvas, values, options = {}) {
   const width = rect.width;
   const height = rect.height;
   const padding = { top: 14, right: 10, bottom: 20, left: 10 };
-  const color = options.color || "#7c5cff";
+  const color = options.color || "#4f8cff";
   const labels = options.labels || [];
 
   ctx.clearRect(0, 0, width, height);

@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 <body>
-  <div class="scene-bg"></div>
   <div id="navbar" data-active="github"></div>
 
   <main class="page container">
@@ -25,8 +24,8 @@
       </div>
     </div>
 
-    <div class="card tilt-card reveal" data-tilt-max="3" id="statusCard">
-      <div class="tilt-layer github-card">
+    <div class="card reveal" id="statusCard">
+      <div class="github-card">
         <div class="github-status-line">
           <div class="skeleton" style="width:120px;height:16px"></div>
         </div>
@@ -34,14 +33,13 @@
     </div>
 
     <div class="card reveal" style="margin-top:18px">
-      <div class="card-header"><div class="card-title">🕘 Sincronizações recentes</div></div>
+      <div class="card-header"><div class="card-title">Sincronizações recentes</div></div>
       <div id="syncHistory"><div class="empty-state">Conecte sua conta para ver o histórico.</div></div>
     </div>
   </main>
 
   <script src="js/api.js"></script>
   <script src="js/ui.js"></script>
-  <script src="js/scene3d.js"></script>
   <script src="js/navbar.js"></script>
   <script src="js/github.js"></script>
 </body>
