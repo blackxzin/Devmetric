@@ -137,9 +137,9 @@
 .calendar-year-switch button {
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--bg-2);
   color: var(--text-1);
   display: grid;
   place-items: center;
@@ -147,5 +147,6 @@
 }
 
 .calendar-year-switch button:hover {
-  background: var(--surface-hover);
+  background: var(--bg-3);
+  border-color: var(--border-strong);
 }

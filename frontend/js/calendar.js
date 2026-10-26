@@ -39,8 +39,12 @@ function renderCalendar(container, calendarData) {
       grid.appendChild(currentWeek);
 
       const month = cursor.getMonth();
+      const recentlyLabeled = months.slice(-3).some(Boolean);
       if (month !== lastMonthLabeled) {
-        months.push(cursor.toLocaleDateString("pt-BR", { month: "short" }));
+        // Evita rótulos colados quando a primeira semana pertence ao mês anterior.
+        const label = cursor.toLocaleDateString("pt-BR", { month: "short" }).replace(".", "");
+        if (recentlyLabeled) months[months.length - 1 - months.slice().reverse().findIndex(Boolean)] = "";
+        months.push(label);
         lastMonthLabeled = month;
       } else {
         months.push("");
