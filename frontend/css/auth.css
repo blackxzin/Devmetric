@@ -26,6 +26,7 @@
   font-weight: 700;
   font-size: 17px;
   z-index: 2;
+  width: fit-content;
 }
 
 .auth-hero {
@@ -47,22 +48,34 @@
   line-height: 1.6;
 }
 
-.auth-hero-stats {
+.auth-hero .hl { color: var(--brand-1); }
+
+.auth-points {
   display: flex;
-  gap: 22px;
+  flex-direction: column;
+  gap: 12px;
   margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
 }
 
-.auth-hero-stats div strong {
-  display: block;
-  font-size: 22px;
-  font-weight: 800;
-  font-family: var(--font-mono);
+.auth-points li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 13.5px;
+  color: var(--text-1);
 }
 
-.auth-hero-stats div span {
-  font-size: 11.5px;
-  color: var(--text-2);
+.auth-points li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 5px;
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid var(--accent-green);
+  border-bottom: 2px solid var(--accent-green);
+  transform: rotate(-45deg);
 }
 
 .auth-side .mini-note {
@@ -84,6 +97,39 @@
   max-width: 380px;
   animation: fade-up var(--dur-slow) var(--ease-out);
 }
+
+.auth-mobile-brand {
+  display: none;
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 28px;
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+}
+
+.input-wrap input {
+  width: 100%;
+  padding-right: 84px;
+}
+
+.pw-toggle {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 10px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pw-toggle:hover { color: var(--text-0); background: var(--bg-3); }
 
 .auth-form-box h2 {
   font-size: 24px;
@@ -110,9 +156,12 @@
   color: var(--text-2);
 }
 
+.auth-switch a:hover { text-decoration: underline; }
+
 .auth-switch a {
   color: var(--brand-2);
   font-weight: 600;
+  text-decoration: none;
 }
 
 .auth-error-banner {
@@ -121,8 +170,8 @@
   gap: 8px;
   padding: 11px 14px;
   border-radius: var(--radius-sm);
-  background: rgba(255, 92, 114, 0.1);
-  border: 1px solid rgba(255, 92, 114, 0.35);
+  background: rgba(229, 100, 110, 0.1);
+  border: 1px solid rgba(229, 100, 110, 0.35);
   color: #ffb3bd;
   font-size: 13px;
   margin-bottom: 18px;
@@ -150,4 +199,5 @@
 @media (max-width: 900px) {
   .auth-page { grid-template-columns: 1fr; }
   .auth-side { display: none; }
+  .auth-mobile-brand { display: inline-block; }
 }

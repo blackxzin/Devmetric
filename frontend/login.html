@@ -8,26 +8,24 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=202610261500" />
-  <link rel="stylesheet" href="css/animations.css?v=202610261500" />
-  <link rel="stylesheet" href="css/components.css?v=202610261500" />
-  <link rel="stylesheet" href="css/auth.css?v=202610261500" />
+  <link rel="stylesheet" href="css/base.css?v=202610261523" />
+  <link rel="stylesheet" href="css/animations.css?v=202610261523" />
+  <link rel="stylesheet" href="css/components.css?v=202610261523" />
+  <link rel="stylesheet" href="css/auth.css?v=202610261523" />
 </head>
 <body>
   <div class="auth-page">
     <aside class="auth-side">
-      <div class="brand">
-        DevMetrics
-      </div>
+      <a href="index.html" class="brand">DevMetrics</a>
 
       <div class="auth-hero">
-        <h1>Sua evolução como <span class="gradient-text">desenvolvedor</span>, medida de verdade.</h1>
+        <h1>Sua evolução como <span class="hl">desenvolvedor</span>, medida de verdade.</h1>
         <p>Commits, PRs, testes, documentação, estudos e tecnologias novas — tudo virando um Dev Score que você consegue explicar.</p>
-        <div class="auth-hero-stats">
-          <div><strong>5</strong><span>Componentes do score</span></div>
-          <div><strong>12</strong><span>Tipos de atividade</span></div>
-          <div><strong>0</strong><span>IA no cálculo</span></div>
-        </div>
+        <ul class="auth-points">
+          <li>Pontuação com regras visíveis e auditáveis</li>
+          <li>Calendário baseado em atividade real, não só commits</li>
+          <li>Desafio diário curto para manter o ritmo</li>
+        </ul>
       </div>
 
       <div class="mini-note">Projeto de portfólio — Java, Spring Boot e PostgreSQL.</div>
@@ -35,6 +33,7 @@
 
     <section class="auth-form-side">
       <div class="auth-form-box">
+        <a href="index.html" class="auth-mobile-brand">DevMetrics</a>
         <h2>Bem-vindo de volta</h2>
         <p class="auth-sub">Entre para ver sua evolução de hoje.</p>
 
@@ -49,7 +48,7 @@
           </div>
           <div class="field">
             <label for="password">Senha</label>
-            <input type="password" id="password" name="password" autocomplete="current-password" required placeholder="••••••••" />
+            <div class="input-wrap"><input type="password" id="password" name="password" autocomplete="current-password" required placeholder="••••••••" /><button type="button" class="pw-toggle" aria-label="Mostrar senha" data-pw-toggle>Mostrar</button></div>
           </div>
           <button type="submit" class="btn btn-primary" id="submitBtn">
             <span id="submitLabel">Entrar</span>
@@ -61,8 +60,8 @@
     </section>
   </div>
 
-  <script src="js/api.js?v=202610261500"></script>
-  <script src="js/ui.js?v=202610261500"></script>
+  <script src="js/api.js?v=202610261523"></script>
+  <script src="js/ui.js?v=202610261523"></script>
   <script>
     if (Api.isAuthenticated()) {
       location.href = "dashboard.html";

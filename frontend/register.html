@@ -8,26 +8,24 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=202610261500" />
-  <link rel="stylesheet" href="css/animations.css?v=202610261500" />
-  <link rel="stylesheet" href="css/components.css?v=202610261500" />
-  <link rel="stylesheet" href="css/auth.css?v=202610261500" />
+  <link rel="stylesheet" href="css/base.css?v=202610261523" />
+  <link rel="stylesheet" href="css/animations.css?v=202610261523" />
+  <link rel="stylesheet" href="css/components.css?v=202610261523" />
+  <link rel="stylesheet" href="css/auth.css?v=202610261523" />
 </head>
 <body>
   <div class="auth-page">
     <aside class="auth-side">
-      <div class="brand">
-        DevMetrics
-      </div>
+      <a href="index.html" class="brand">DevMetrics</a>
 
       <div class="auth-hero">
-        <h1>Comece a documentar sua <span class="gradient-text">evolução</span> hoje.</h1>
+        <h1>Comece a documentar sua <span class="hl">evolução</span> hoje.</h1>
         <p>Leva menos de um minuto. Depois, conecte o GitHub e veja o calendário se preencher com sua atividade real, já classificada por tipo.</p>
-        <div class="auth-hero-stats">
-          <div><strong>Grátis</strong><span>Sem cartão</span></div>
-          <div><strong>1 min</strong><span>Para começar</span></div>
-          <div><strong>100%</strong><span>Transparente</span></div>
-        </div>
+        <ul class="auth-points">
+          <li>Gratuito e sem cartão de crédito</li>
+          <li>Conexão com o GitHub opcional e somente leitura</li>
+          <li>Você vê como cada ponto foi calculado</li>
+        </ul>
       </div>
 
       <div class="mini-note">Seus dados de GitHub são só leitura e podem ser revogados quando quiser.</div>
@@ -35,6 +33,7 @@
 
     <section class="auth-form-side">
       <div class="auth-form-box">
+        <a href="index.html" class="auth-mobile-brand">DevMetrics</a>
         <h2>Criar sua conta</h2>
         <p class="auth-sub">É rápido — e você pode importar o GitHub em seguida.</p>
 
@@ -53,11 +52,11 @@
           </div>
           <div class="field">
             <label for="password">Senha</label>
-            <input type="password" id="password" name="password" autocomplete="new-password" required minlength="8" placeholder="Mínimo 8 caracteres, com letra e número" />
+            <div class="input-wrap"><input type="password" id="password" name="password" autocomplete="new-password" required minlength="8" placeholder="Mínimo 8 caracteres" /><button type="button" class="pw-toggle" aria-label="Mostrar senha" data-pw-toggle>Mostrar</button></div>
             <div class="password-strength" id="strengthBar">
               <span></span><span></span><span></span><span></span>
             </div>
-            <span class="field-hint">Precisa ter letra e número.</span>
+            <span class="field-hint" id="strengthHint">Mínimo de 8 caracteres, com letra e número.</span>
           </div>
           <button type="submit" class="btn btn-primary" id="submitBtn">
             <span id="submitLabel">Criar conta</span>
@@ -69,8 +68,8 @@
     </section>
   </div>
 
-  <script src="js/api.js?v=202610261500"></script>
-  <script src="js/ui.js?v=202610261500"></script>
+  <script src="js/api.js?v=202610261523"></script>
+  <script src="js/ui.js?v=202610261523"></script>
   <script>
     if (Api.isAuthenticated()) {
       location.href = "dashboard.html";
@@ -101,6 +100,9 @@
     passwordInput.addEventListener("input", () => {
       const score = passwordScore(passwordInput.value);
       const colors = ["#e5646e", "#e0a04a", "#7aa7ff", "#3fb68b"];
+      const labels = ["Muito fraca", "Fraca", "Boa", "Forte"];
+      const hint = document.getElementById("strengthHint");
+      hint.textContent = score ? "Força da senha: " + labels[score - 1] : "Mínimo de 8 caracteres, com letra e número.";
       strengthBars.forEach((bar, index) => {
         bar.style.background = index < score ? colors[score - 1] : "rgba(255,255,255,0.08)";
       });

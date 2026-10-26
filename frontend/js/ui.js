@@ -142,3 +142,14 @@ function initialsOf(name) {
   const parts = name.trim().split(/\s+/);
   return parts.length === 1 ? parts[0].slice(0, 2).toUpperCase() : (parts[0][0] + parts[1][0]).toUpperCase();
 }
+
+/** Botão "Mostrar/Ocultar" nos campos de senha marcados com data-pw-toggle. */
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-pw-toggle]");
+  if (!button) return;
+  const input = button.parentElement.querySelector("input");
+  const show = input.type === "password";
+  input.type = show ? "text" : "password";
+  button.textContent = show ? "Ocultar" : "Mostrar";
+  button.setAttribute("aria-label", show ? "Ocultar senha" : "Mostrar senha");
+});
