@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GitHubOAuthService {
 
     private static final Duration STATE_TTL = Duration.ofMinutes(5);
-    private static final String SCOPES = "read:user,repo";
+    private static final String SCOPES = "read:user,public_repo";
 
     private record PendingState(Long userId, Instant createdAt) {
     }

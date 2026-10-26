@@ -1,6 +1,17 @@
-# Segredos
+# Segredos (nunca versionar; so o .env.example vai pro git)
 .env
+.env.*
+!.env.example
 *.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+secrets/
+credentials*.json
+application-local.yml
+application-local.properties
 
 # Build
 backend/target/

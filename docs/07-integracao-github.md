@@ -14,7 +14,7 @@ Usuário clica "Conectar GitHub"
   ├─ GET /api/v1/github/authorize-url   (autenticado)
   │     backend gera state aleatório, guarda em cache com o userId (TTL 5min)
   │     devolve: https://github.com/login/oauth/authorize
-  │               ?client_id=...&scope=read:user,repo&state=...
+  │               ?client_id=...&scope=read:user,public_repo&state=...
   │
   ├─ navegador vai ao GitHub, usuário autoriza
   │
@@ -27,7 +27,7 @@ Usuário clica "Conectar GitHub"
   └─ redireciona para o frontend: /dashboard.html?github=connected
 ```
 
-Escopos: `read:user` e `repo`. Sem `repo` não dá para ler commits de repositório privado.
+Escopos: `read:user` e `public_repo` (só repositórios públicos). Repositórios privados exigiriam `repo`, que dá escrita e por isso não é usado.
 Deixar claro na tela que o acesso é somente leitura e pode ser revogado.
 
 ## 2. Sincronização
